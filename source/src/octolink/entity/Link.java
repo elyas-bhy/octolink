@@ -17,19 +17,20 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	
 	public static final int SPRITE_WIDTH = 24;
 	public static final int SPRITE_HEIGHT = 32;
+	public static final int RENDERING_SCALE = 2;
 	
 	protected final SpriteManager spriteManager;
 	private boolean moving;
 
 	public Link(Canvas defaultCanvas) {
-		spriteManager = new SpriteManagerOctolinkImpl("images/link_walk.png", defaultCanvas, 2,
-				SPRITE_WIDTH, SPRITE_HEIGHT, 11);
+		spriteManager = new SpriteManagerOctolinkImpl("images/link_walk.png", defaultCanvas,
+				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, 11);
 		spriteManager.setTypes("down", "up", "right", "left");
 	}
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return new Rectangle(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+		return new Rectangle(0, 0, SPRITE_WIDTH * RENDERING_SCALE, SPRITE_HEIGHT * RENDERING_SCALE);
 	}
 
 	@Override
