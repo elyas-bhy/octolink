@@ -1,15 +1,16 @@
 package octolink.entity;
 
+import gameframework.base.Drawable;
+import gameframework.base.Overlappable;
+import gameframework.game.GameEntity;
+import gameframework.game.GameMovable;
+import gameframework.game.SpriteManager;
+
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import gameframework.base.Drawable;
-import gameframework.base.Overlappable;
-import gameframework.game.GameEntity;
-import gameframework.game.GameMovable;
-import gameframework.game.SpriteManager;
 import octolink.gameframework.game.SpriteManagerOctolinkImpl;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable {

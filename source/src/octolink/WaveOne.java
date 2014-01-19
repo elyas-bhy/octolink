@@ -20,6 +20,7 @@ import octolink.entity.Link;
 import octolink.entity.Path;
 import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
+import octolink.gameframework.game.OctolinkMoveStrategyKeyboard;
 import octolink.rule.OctolinkMoveBlockers;
 import octolink.rule.OctolinkOverlapRules;
 import pacman.rule.GhostMovableDriver;
@@ -70,7 +71,7 @@ public class WaveOne extends GameLevelDefaultImpl {
 		// Link definition and inclusion in the universe
 		Link link = new Link(canvas);
 		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
-		MoveStrategyKeyboard keyStr = new MoveStrategyKeyboard();
+		MoveStrategyKeyboard keyStr = new OctolinkMoveStrategyKeyboard();
 		linkDriver.setStrategy(keyStr);
 		linkDriver.setmoveBlockerChecker(moveBlockerChecker);
 		canvas.addKeyListener(keyStr);
