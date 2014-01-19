@@ -28,7 +28,7 @@ import pacman.rule.GhostMovableDriver;
 public class WaveOne extends GameLevelDefaultImpl {
 	Canvas canvas;
 
-	// 0 : Terrain; 1 : Spawn point; 2 : Walls; 3 : Ponds; 4 : Holes; 5 : Zelda
+	// 0 : Path; 1 : Spawn; 2 : Walls; 3 : Ponds; 4 : Holes; 5 : Zelda
 	static int[][] tab = { 
 	    	{ 1, 2, 2, 2, 2, 2, 2, 2 },
 	    	{ 0, 0, 0, 0, 0, 0, 0, 2 },

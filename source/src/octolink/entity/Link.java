@@ -47,6 +47,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			spriteType += "up";
 		} else {
 			moving = false;
+			spriteManager.reset();
 			spriteManager.draw(g, getPosition());
 			return;
 		}
