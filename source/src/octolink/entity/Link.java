@@ -14,18 +14,18 @@ import gameframework.game.SpriteManagerDefaultImpl;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable {
 	
-	public static final int RENDERING_SIZE = 16;
+	public static final int RENDERING_SIZE = 36;
 	
 	protected final SpriteManager spriteManager;
 
 	public Link(Canvas defaultCanvas) {
-		spriteManager = new SpriteManagerDefaultImpl("images/pac1.gif", defaultCanvas, RENDERING_SIZE, 6);
-		spriteManager.setTypes("right", "left", "up", "down", "unused", "static");
+		spriteManager = new SpriteManagerDefaultImpl("images/link_walk.png", defaultCanvas, RENDERING_SIZE, 11);
+		spriteManager.setTypes("down", "up", "right", "left", "static");
 	}
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(0, 0, RENDERING_SIZE, RENDERING_SIZE));
+		return new Rectangle(0, 0, RENDERING_SIZE, RENDERING_SIZE);
 	}
 
 	@Override
