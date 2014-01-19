@@ -19,19 +19,19 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 	private final DrawableImage image;
 	private Map<String, Integer> types;
 	private int spriteNumber = 0;
-	private final int maxSpriteNumber;
+	private final int[] spriteRows;
 	private int currentRow;
 	private final int renderingScale;
 	private final int spriteWidth;
 	private final int spriteHeight;
 
 	public SpriteManagerOctolinkImpl(String filename, Canvas canvas, int renderingScale,
-			int spriteWidth, int spriteHeight, int maxSpriteNumber) {
+			int spriteWidth, int spriteHeight, int[] spriteRows) {
 		this.renderingScale = renderingScale;
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
+		this.spriteRows = spriteRows;
 		image = new DrawableImage(filename, canvas);
-		this.maxSpriteNumber = maxSpriteNumber;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 
 	@Override
 	public void increment() {
-		spriteNumber = (spriteNumber + 1) % maxSpriteNumber;
+		spriteNumber = (spriteNumber + 1) % spriteRows[currentRow];
 	}
 
 	@Override

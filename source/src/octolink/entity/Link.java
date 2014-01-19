@@ -15,22 +15,25 @@ import octolink.gameframework.game.SpriteManagerOctolinkImpl;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable {
 	
-	public static final int SPRITE_WIDTH = 24;
-	public static final int SPRITE_HEIGHT = 32;
-	public static final int RENDERING_SCALE = 2;
+	public static final int SPRITE_WIDTH = 24*3;
+	public static final int SPRITE_HEIGHT = 32*3;
+	public static final int RENDERING_SCALE = 1;
+	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5};
 	
 	protected final SpriteManager spriteManager;
 	private boolean moving;
 
 	public Link(Canvas defaultCanvas) {
-		spriteManager = new SpriteManagerOctolinkImpl("images/link_walk.png", defaultCanvas,
-				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, 11);
-		spriteManager.setTypes("down", "up", "right", "left");
+		spriteManager = new SpriteManagerOctolinkImpl("images/link_sprites.png", defaultCanvas,
+				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS);
+		spriteManager.setTypes("down", "up", "right", "left",
+				"downSword", "upSword", "rightSword", "leftSword");
 	}
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return new Rectangle(0, 0, SPRITE_WIDTH * RENDERING_SCALE, SPRITE_HEIGHT * RENDERING_SCALE);
+		return new Rectangle(SPRITE_WIDTH * RENDERING_SCALE, SPRITE_HEIGHT * RENDERING_SCALE,
+				SPRITE_WIDTH * 2 * RENDERING_SCALE, SPRITE_HEIGHT * 2 * RENDERING_SCALE);
 	}
 
 	@Override
@@ -39,13 +42,13 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		Point tmp = getSpeedVector().getDirection();
 
 		if (tmp.getX() == 1) {
-			spriteType += "right";
+			spriteType += "rightSword";
 		} else if (tmp.getX() == -1) {
-			spriteType += "left";
+			spriteType += "leftSword";
 		} else if (tmp.getY() == 1) {
-			spriteType += "down";
+			spriteType += "downSword";
 		} else if (tmp.getY() == -1) {
-			spriteType += "up";
+			spriteType += "upSword";
 		} else {
 			moving = false;
 			spriteManager.reset();
