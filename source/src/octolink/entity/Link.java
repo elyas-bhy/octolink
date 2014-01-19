@@ -14,12 +14,13 @@ import java.awt.Rectangle;
 import octolink.gameframework.game.SpriteManagerOctolinkImpl;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable {
-	
+
 	public static final int SPRITE_WIDTH = 24*3;
 	public static final int SPRITE_HEIGHT = 32*3;
 	public static final int RENDERING_SCALE = 1;
-	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5};
-	
+	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4,
+		8, 9, 8, 8};
+
 	protected final SpriteManager spriteManager;
 	private boolean moving;
 
@@ -27,7 +28,11 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		spriteManager = new SpriteManagerOctolinkImpl("images/link_sprites.png", defaultCanvas,
 				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS);
 		spriteManager.setTypes("down", "up", "right", "left",
-				"downSword", "upSword", "rightSword", "leftSword");
+				"sword-down", "sword-up", "sword-right", "sword-left",
+				"sword-strike-down", "sword-strike-up", "sword-strike-right", "sword-strike-left",
+				"shield-down", "shield-up", "shield-right", "shield-left",
+				"shield-moving-down", "shield-moving-up", "shield-moving-right", "shield-moving-left"
+				);
 	}
 
 	@Override
@@ -42,13 +47,13 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		Point tmp = getSpeedVector().getDirection();
 
 		if (tmp.getX() == 1) {
-			spriteType += "rightSword";
+			spriteType += "shield-moving-right";
 		} else if (tmp.getX() == -1) {
-			spriteType += "leftSword";
+			spriteType += "shield-moving-left";
 		} else if (tmp.getY() == 1) {
-			spriteType += "downSword";
+			spriteType += "shield-moving-down";
 		} else if (tmp.getY() == -1) {
-			spriteType += "upSword";
+			spriteType += "shield-moving-up";
 		} else {
 			moving = false;
 			spriteManager.reset();
@@ -66,5 +71,5 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			spriteManager.increment();
 		}
 	}
-	
+
 }
