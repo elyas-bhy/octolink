@@ -23,11 +23,11 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	private final ObservableValue<Integer> life;
 	private final ObservableValue<Boolean> endOfGame;
 
-	public OctolinkOverlapRules(Point pacPos, Point gPos,
+	public OctolinkOverlapRules(Point linkPos, Point creepPos,
 			ObservableValue<Integer> life, ObservableValue<Integer> score,
 			ObservableValue<Boolean> endOfGame) {
-		linkStartPos = (Point) pacPos.clone();
-		creepStartPos = (Point) gPos.clone();
+		linkStartPos = (Point) linkPos.clone();
+		creepStartPos = (Point) creepPos.clone();
 		this.life = life;
 		this.score = score;
 		this.endOfGame = endOfGame;

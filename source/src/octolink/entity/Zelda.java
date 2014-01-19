@@ -10,33 +10,30 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-public abstract class AbstractTerrain implements Terrain, Drawable, Overlappable, GameEntity {
+public class Zelda implements Drawable, GameEntity, Overlappable {
 
 	public static final int RENDERING_SIZE = 16;
-	private DrawableImage image;
+	protected static DrawableImage image = null;
 	protected Point position;
 
-	public AbstractTerrain(Canvas defaultCanvas, Point pos, String gif) {
-		image = new DrawableImage(gif, defaultCanvas);
+	public Zelda(Canvas defaultCanvas, Point pos) {
+		image = new DrawableImage("images/zelda.gif", defaultCanvas);
 		position = pos;
 	}
 
-	@Override
 	public Point getPosition() {
 		return position;
 	}
-	
-	@Override
+
 	public void draw(Graphics g) {
-		g.drawImage(image.getImage(), (int) getPosition().getX(), 
+		g.drawImage(image.getImage(), (int) getPosition().getX(),
 				(int) getPosition().getY(), RENDERING_SIZE, RENDERING_SIZE,
 				null);
+
 	}
-	
-	@Override
+
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) position.getX(), (int) position.getY(),
 				RENDERING_SIZE, RENDERING_SIZE));
 	}
-	
 }
