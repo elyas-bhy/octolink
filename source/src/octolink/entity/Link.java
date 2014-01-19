@@ -9,23 +9,25 @@ import gameframework.base.Drawable;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
-import gameframework.game.SpriteManager;
-import gameframework.game.SpriteManagerDefaultImpl;
+import gameframework.game.SpriteManager;
+import octolink.gameframework.game.SpriteManagerOctolinkImpl;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable {
 	
-	public static final int RENDERING_SIZE = 36;
+	public static final int SPRITE_WIDTH = 24;
+	public static final int SPRITE_HEIGHT = 32;
 	
 	protected final SpriteManager spriteManager;
 
 	public Link(Canvas defaultCanvas) {
-		spriteManager = new SpriteManagerDefaultImpl("images/link_walk.png", defaultCanvas, RENDERING_SIZE, 11);
-		spriteManager.setTypes("down", "up", "right", "left", "static");
+		spriteManager = new SpriteManagerOctolinkImpl("images/link_walk.png", defaultCanvas, 2,
+				SPRITE_WIDTH, SPRITE_HEIGHT, 11);
+		spriteManager.setTypes("down", "up", "right", "left");
 	}
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return new Rectangle(0, 0, RENDERING_SIZE, RENDERING_SIZE);
+		return new Rectangle(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
 	}
 
 	@Override
@@ -42,7 +44,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		} else if (tmp.getY() == -1) {
 			spriteType += "up";
 		} else {
-			spriteType = "static";
+			spriteType = "right";
 			spriteManager.reset();
 		}
 		spriteManager.setType(spriteType);
