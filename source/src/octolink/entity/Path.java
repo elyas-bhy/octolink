@@ -1,11 +1,12 @@
 package octolink.entity;
 
 import java.awt.Canvas;
+import java.awt.Point;
 
 public class Path extends AbstractTerrain {
 
-	public Path(Canvas defaultCanvas, String gif, int xx, int yy) {
-		super(defaultCanvas, "images/wall.gif", xx, yy);  // TODO replace gif with appropriate type
+	public Path(Canvas defaultCanvas, Point pos) {
+		super(defaultCanvas, pos, "images/wall.gif");  // TODO replace gif with appropriate type
 	}
 
 }

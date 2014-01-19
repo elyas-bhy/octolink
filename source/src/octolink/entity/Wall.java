@@ -1,10 +1,12 @@
 package octolink.entity;
 
 import java.awt.Canvas;
+import java.awt.Point;
 
 public class Wall extends AbstractTerrain {
 
-	public Wall(Canvas defaultCanvas, String gif, int xx, int yy) {
-		super(defaultCanvas, "images/wall.gif", xx, yy);
+	public Wall(Canvas defaultCanvas, Point pos) {
+		super(defaultCanvas, pos, "images/wall.gif");
 	}
+	
 }
