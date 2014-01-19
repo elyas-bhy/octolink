@@ -19,6 +19,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public static final int SPRITE_HEIGHT = 32;
 	
 	protected final SpriteManager spriteManager;
+	private boolean moving;
 
 	public Link(Canvas defaultCanvas) {
 		spriteManager = new SpriteManagerOctolinkImpl("images/link_walk.png", defaultCanvas, 2,
@@ -45,16 +46,20 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		} else if (tmp.getY() == -1) {
 			spriteType += "up";
 		} else {
-			spriteType = "right";
-			spriteManager.reset();
+			moving = false;
+			spriteManager.draw(g, getPosition());
+			return;
 		}
+		moving = true;
 		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
 	}
 
 	@Override
 	public void oneStepMoveAddedBehavior() {
-		spriteManager.increment();
+		if (moving) {
+			spriteManager.increment();
+		}
 	}
 	
 }
