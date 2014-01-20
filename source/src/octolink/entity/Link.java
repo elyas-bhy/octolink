@@ -16,8 +16,8 @@ import octolink.gameframework.game.SpriteManagerOctolinkImpl;
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable {
 
 	public static final int SPRITE_WIDTH = 24;
-	public static final int SPRITE_HEIGHT = 32;
-	public static final int RENDERING_SCALE = 1;
+	public static final int SPRITE_HEIGHT = 24;
+	public static final float RENDERING_SCALE = 0.7f;
 	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4,
 		8, 9, 8, 8};
 
@@ -38,7 +38,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	@Override
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) getPosition().getX(), (int) getPosition().getY(),
-				SPRITE_WIDTH, SPRITE_HEIGHT));
+				(int) (SPRITE_WIDTH * RENDERING_SCALE), (int) (SPRITE_HEIGHT * RENDERING_SCALE)));
 	}
 
 	@Override

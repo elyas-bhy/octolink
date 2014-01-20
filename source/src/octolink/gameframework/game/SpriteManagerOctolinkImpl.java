@@ -21,11 +21,11 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 	private int spriteNumber = 0;
 	private final int[] spriteRows;
 	private int currentRow;
-	private final int renderingScale;
+	private final float renderingScale;
 	private final int spriteWidth;
 	private final int spriteHeight;
 
-	public SpriteManagerOctolinkImpl(String filename, Canvas canvas, int renderingScale,
+	public SpriteManagerOctolinkImpl(String filename, Canvas canvas, float renderingScale,
 			int spriteWidth, int spriteHeight, int[] spriteRows) {
 		this.renderingScale = renderingScale;
 		this.spriteWidth = spriteWidth;
@@ -49,8 +49,8 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 		// Destination image coordinates
 		int dx1 = (int) position.getX();
 		int dy1 = (int) position.getY();
-		int dx2 = dx1 + (renderingScale * spriteWidth * 3);
-		int dy2 = dy1 + (renderingScale * spriteHeight * 3);
+		int dx2 = dx1 + (int) (renderingScale * spriteWidth * 3);
+		int dy2 = dy1 + (int) (renderingScale * spriteHeight * 3);
 
 		// Source image coordinates
 		int sx1 = spriteNumber * spriteWidth * 3 + spriteWidth;
