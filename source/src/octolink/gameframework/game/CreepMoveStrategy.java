@@ -5,37 +5,48 @@ import gameframework.base.SpeedVector;
 import gameframework.base.SpeedVectorDefaultImpl;
 
 import java.awt.Point;
-import java.util.Random;
 
 import octolink.entity.WarriorCreep;
 
 public class CreepMoveStrategy implements MoveStrategy {
 	
+	// Represents a path tile on the map
+	private final int PATH = 0;
+	private final int SPRITE_SIZE = 16;
+
 	private SpeedVector currentMove = new SpeedVectorDefaultImpl(new Point(0, 0));
 	private WarriorCreep creep;
-	
-	public CreepMoveStrategy(WarriorCreep c) {
-		creep = c;
+	private int[][] map;
+
+	public CreepMoveStrategy(WarriorCreep creep, int[][] map) {
+		this.creep = creep;
+		this.map = map;
 	}
 
-	static Random random = new Random();
-
-	public SpeedVector getSpeedVector() {
-		int i = random.nextInt(5);
-
-		switch (i) {
-		case 0:
-			currentMove.setDirection(new Point(1, 0));
-			break;
-		case 1:
-			currentMove.setDirection(new Point(-1, 0));
-			break;
-		case 2:
-			currentMove.setDirection(new Point(0, -1));
-			break;
-		case 3:
+	public synchronized SpeedVector getSpeedVector() {
+		if (creep.getPosition().distance(1 * SPRITE_SIZE, 1 * SPRITE_SIZE) == 0) {  // Spawn coordinates
 			currentMove.setDirection(new Point(0, 1));
-			break;
+			return currentMove;
+		}
+		
+		int row = (int) creep.getPosition().getX() / SPRITE_SIZE;
+		int col = (int) creep.getPosition().getY() / SPRITE_SIZE;
+
+		if (map[col][row+1] == PATH 
+				&& (creep.getSpeedVector().getDirection().getX() != -1)) {  // right
+			currentMove.setDirection(new Point(1, 0));
+			
+		} else if (map[col+1][row] == PATH 
+				&& (creep.getSpeedVector().getDirection().getY() != -1)) {  // down
+			currentMove.setDirection(new Point(0, 1));
+			
+		} else if (map[col][row-1] == PATH 
+				&& (creep.getSpeedVector().getDirection().getX() != 1)) {  // left
+			currentMove.setDirection(new Point(-1, 0));
+			
+		} else if (map[col-1][row] == PATH 
+				&& (creep.getSpeedVector().getDirection().getY() != 1)) {  // up
+			currentMove.setDirection(new Point(0, -1));
 		}
 		return currentMove;
 	}

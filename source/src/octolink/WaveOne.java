@@ -24,15 +24,16 @@ import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
 import octolink.entity.Zelda;
 import octolink.gameframework.game.CreepMoveStrategy;
+import octolink.gameframework.game.OctolinkGameLevel;
 import octolink.gameframework.game.OctolinkMoveStrategyKeyboard;
 import octolink.rule.OctolinkMoveBlockers;
 import octolink.rule.OctolinkOverlapRules;
 
-public class WaveOne extends GameLevelDefaultImpl {
+public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 	Canvas canvas;
 
 	// 0 : Path; 1 : Spawn; 2 : Walls; 3 : Grass; 4 : Water; 5 : Holes; 6 : Zelda
-	static int[][] tab = { 
+	static int[][] map = { 
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 		{ 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 		{ 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
@@ -67,7 +68,7 @@ public class WaveOne extends GameLevelDefaultImpl {
 	
 	
 	public static final int SPRITE_SIZE = 16;
-	public static final int NUMBER_OF_CREEPS = 5;
+	public static final int NUMBER_OF_CREEPS = 1;
 
 	@Override
 	protected void init() {
@@ -89,22 +90,22 @@ public class WaveOne extends GameLevelDefaultImpl {
 		// Filling up the universe with basic non movable entities and inclusion in the universe
 		for (int i = 0; i < 31; ++i) {
 			for (int j = 0; j < 28; ++j) {
-				if (tab[i][j] == 0) {
+				if (map[i][j] == 0) {
 					universe.addGameEntity(new Path(canvas, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
 				}
-				if (tab[i][j] == 1) {
+				if (map[i][j] == 1) {
 					universe.addGameEntity(new Spawn(new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
 				}
-				if (tab[i][j] == 2) {
+				if (map[i][j] == 2) {
 					universe.addGameEntity(new Wall(canvas, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
 				}
-				if (tab[i][j] == 3) {
+				if (map[i][j] == 3) {
 					universe.addGameEntity(new Grass(canvas, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
 				}
-				if (tab[i][j] == 4) {
+				if (map[i][j] == 4) {
 					universe.addGameEntity(new Water(canvas, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
 				}
-				if (tab[i][j] == 6) {
+				if (map[i][j] == 6) {
 					universe.addGameEntity(new Zelda(canvas, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
 				}
 			}
@@ -127,7 +128,7 @@ public class WaveOne extends GameLevelDefaultImpl {
 			GameMovableDriverDefaultImpl creepDriver = new GameMovableDriverDefaultImpl();
 			creepDriver.setmoveBlockerChecker(moveBlockerChecker);
 			creep = new WarriorCreep(canvas);
-			CreepMoveStrategy strategy = new CreepMoveStrategy(creep);
+			CreepMoveStrategy strategy = new CreepMoveStrategy(creep, map);
 			creepDriver.setStrategy(strategy);
 			creep.setDriver(creepDriver);
 			creep.setPosition(new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE));
@@ -139,6 +140,10 @@ public class WaveOne extends GameLevelDefaultImpl {
 	public WaveOne(Game g) {
 		super(g);
 		canvas = g.getCanvas();
+	}
+	
+	public int[][] getMap() {
+		return map;
 	}
 
 }
