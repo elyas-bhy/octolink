@@ -1,17 +1,26 @@
 package octolink.rule;
 
-import octolink.entity.Creep;
-import octolink.entity.Path;
-import octolink.entity.Terrain;
 import gameframework.game.IllegalMoveException;
 import gameframework.game.MoveBlockerRulesApplierDefaultImpl;
+import octolink.entity.AbstractBlockerTerrain;
+import octolink.entity.Creep;
+import octolink.entity.Grass;
+import octolink.entity.Wall;
+import octolink.entity.Zelda;
 
 public class OctolinkMoveBlockers extends MoveBlockerRulesApplierDefaultImpl {
-
-	public void moveBlockerRule(Creep c, Terrain t) throws IllegalMoveException {
+	
+	public void moveBlockerRule(Creep c, AbstractBlockerTerrain t) throws IllegalMoveException {
 		// Creeps can only walk through paths
-		if (!(t instanceof Path)) {
-			throw new IllegalMoveException();
-		}
+		throw new IllegalMoveException();
 	}
+
+	public void moveBlockerRule(Zelda z, Wall w) throws IllegalMoveException {
+		throw new IllegalMoveException();
+	}
+	
+	/*public void moveBlockerRule(Zelda z, Grass g) throws IllegalMoveException {
+		
+	}*/
+	
 }

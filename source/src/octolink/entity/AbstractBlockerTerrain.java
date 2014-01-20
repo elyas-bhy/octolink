@@ -2,26 +2,25 @@ package octolink.entity;
 
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
-import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
+import gameframework.game.MoveBlocker;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-public abstract class AbstractTerrain implements Terrain, Drawable, Overlappable, GameEntity {
+public abstract class AbstractBlockerTerrain implements Terrain, MoveBlocker, Drawable, GameEntity {
 
 	public static final int RENDERING_SIZE = 16;
 	private DrawableImage image;
 	protected Point position;
 
-	public AbstractTerrain(Canvas defaultCanvas, Point pos, String gif) {
+	public AbstractBlockerTerrain(Canvas defaultCanvas, Point pos, String gif) {
 		image = new DrawableImage(gif, defaultCanvas);
 		position = pos;
 	}
 
-	@Override
 	public Point getPosition() {
 		return position;
 	}
@@ -33,7 +32,6 @@ public abstract class AbstractTerrain implements Terrain, Drawable, Overlappable
 				null);
 	}
 	
-	@Override
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) position.getX(), (int) position.getY(),
 				RENDERING_SIZE, RENDERING_SIZE));

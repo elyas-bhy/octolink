@@ -1,7 +1,6 @@
 package octolink;
 
 import gameframework.base.MoveStrategyKeyboard;
-import gameframework.base.MoveStrategyRandom;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
@@ -24,10 +23,10 @@ import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
 import octolink.entity.Zelda;
+import octolink.gameframework.game.CreepMoveStrategy;
 import octolink.gameframework.game.OctolinkMoveStrategyKeyboard;
 import octolink.rule.OctolinkMoveBlockers;
 import octolink.rule.OctolinkOverlapRules;
-import pacman.rule.GhostMovableDriver;
 
 public class WaveOne extends GameLevelDefaultImpl {
 	Canvas canvas;
@@ -125,11 +124,11 @@ public class WaveOne extends GameLevelDefaultImpl {
 		// Creeps definition and inclusion in the universe
 		WarriorCreep creep;
 		for (int t = 0; t < NUMBER_OF_CREEPS; ++t) {
-			GameMovableDriverDefaultImpl creepDriver = new GhostMovableDriver(); // TODO implement CreepMovableDriver
-			MoveStrategyRandom ranStr = new MoveStrategyRandom();
-			creepDriver.setStrategy(ranStr);
+			GameMovableDriverDefaultImpl creepDriver = new GameMovableDriverDefaultImpl();
 			creepDriver.setmoveBlockerChecker(moveBlockerChecker);
 			creep = new WarriorCreep(canvas);
+			CreepMoveStrategy strategy = new CreepMoveStrategy(creep);
+			creepDriver.setStrategy(strategy);
 			creep.setDriver(creepDriver);
 			creep.setPosition(new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE));
 			universe.addGameEntity(creep);

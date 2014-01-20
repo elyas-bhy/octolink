@@ -37,8 +37,8 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return new Rectangle(SPRITE_WIDTH * RENDERING_SCALE, SPRITE_HEIGHT * RENDERING_SCALE,
-				SPRITE_WIDTH * 2 * RENDERING_SCALE, SPRITE_HEIGHT * 2 * RENDERING_SCALE);
+		return (new Rectangle((int) getPosition().getX(), (int) getPosition().getY(),
+				24, 32));
 	}
 
 	@Override
@@ -63,6 +63,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		moving = true;
 		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
+		g.drawRect(getBoundingBox().x, getBoundingBox().y, getBoundingBox().width, getBoundingBox().height);
 	}
 
 	@Override
