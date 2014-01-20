@@ -10,9 +10,10 @@ import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
+import gameframework.game.MoveBlocker;
 import gameframework.game.SpriteManagerDefaultImpl;
 
-public abstract class Creep extends GameMovable implements Drawable, GameEntity, Overlappable {
+public abstract class Creep extends GameMovable implements Drawable, GameEntity, Overlappable, MoveBlocker {
 
 	public static final int RENDERING_SIZE = 16;
 	

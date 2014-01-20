@@ -39,6 +39,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) getPosition().getX(), (int) getPosition().getY(),
 				(int) (SPRITE_WIDTH * RENDERING_SCALE), (int) (SPRITE_HEIGHT * RENDERING_SCALE)));
+
 	}
 
 	@Override

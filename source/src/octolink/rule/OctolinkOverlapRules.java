@@ -10,6 +10,9 @@ import java.util.Vector;
 
 import octolink.entity.Creep;
 import octolink.entity.Link;
+import octolink.entity.Wall;
+import octolink.entity.Water;
+import octolink.entity.Zelda;
 
 public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	
@@ -48,5 +51,23 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	}
 
 	public void overlapRule(Link l, Creep c) {
+		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
+		System.out.println("creep");
+	}
+
+	public void overlapRule(Link l, Wall w) {
+		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
+		System.out.println(w.getPosition().getX() + "," + w.getPosition().getY());
+		System.out.println("wall");
+	}
+
+	public void overlapRule(Link l, Water w) {
+		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
+		System.out.println("water");
+	}
+
+	public void overlapRule(Link l, Zelda z) {
+		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
+		System.out.println("zelda");
 	}
 }
