@@ -49,14 +49,14 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 		// Destination image coordinates
 		int dx1 = (int) position.getX();
 		int dy1 = (int) position.getY();
-		int dx2 = dx1 + (renderingScale * spriteWidth);
-		int dy2 = dy1 + (renderingScale * spriteHeight);
+		int dx2 = dx1 + (renderingScale * spriteWidth * 3);
+		int dy2 = dy1 + (renderingScale * spriteHeight * 3);
 
 		// Source image coordinates
-		int sx1 = spriteNumber * spriteWidth;
-		int sy1 = currentRow * spriteHeight;
-		int sx2 = sx1 + spriteWidth;
-		int sy2 = sy1 + spriteHeight;
+		int sx1 = spriteNumber * spriteWidth * 3 + spriteWidth;
+		int sy1 = currentRow * spriteHeight * 3 + spriteHeight;
+		int sx2 = sx1 + spriteWidth * 3;
+		int sy2 = sy1 + spriteHeight * 3;
 		g.drawImage(image.getImage(), dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,
 				null);
 	}
