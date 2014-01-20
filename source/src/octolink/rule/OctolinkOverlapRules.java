@@ -1,7 +1,12 @@
 package octolink.rule;
 
+import gameframework.base.MoveStrategyStraightLine;
 import gameframework.base.ObservableValue;
 import gameframework.base.Overlap;
+import gameframework.base.SpeedVector;
+import gameframework.base.SpeedVectorDefaultImpl;
+import gameframework.game.GameMovableDriver;
+import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverse;
 import gameframework.game.OverlapRulesApplierDefaultImpl;
 
@@ -10,9 +15,7 @@ import java.util.Vector;
 
 import octolink.entity.Creep;
 import octolink.entity.Link;
-import octolink.entity.Wall;
-import octolink.entity.Water;
-import octolink.entity.Zelda;
+import octolink.entity.WarriorCreep;
 
 public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	
@@ -50,24 +53,20 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 		super.applyOverlapRules(overlappables);
 	}
 
-	public void overlapRule(Link l, Creep c) {
-		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
-		System.out.println("creep");
-	}
+	public void overlapRule(Link l, WarriorCreep c) {
+		Point a = l.getPosition();
+		SpeedVector creepSpeedVector = c.getSpeedVector();
+		GameMovableDriver oldLinkDriver = l.getDriver();
+		
+		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
+		Point destination = new Point(
+					(int) (a.getX() + creepSpeedVector.getDirection().getX() * 100),
+					(int) (a.getY() + creepSpeedVector.getDirection().getY() * 100));
 
-	public void overlapRule(Link l, Wall w) {
-		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
-		System.out.println(w.getPosition().getX() + "," + w.getPosition().getY());
-		System.out.println("wall");
-	}
-
-	public void overlapRule(Link l, Water w) {
-		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
-		System.out.println("water");
-	}
-
-	public void overlapRule(Link l, Zelda z) {
-		System.out.println(l.getPosition().getX() + "," + l.getPosition().getY());
-		System.out.println("zelda");
+		linkDriver.setStrategy(new MoveStrategyStraightLine(a, destination));
+		l.setDriver(linkDriver);
+		for(int i = 0; i < 3; ++i)
+			l.oneStepMove();
+		l.setDriver(oldLinkDriver);
 	}
 }
