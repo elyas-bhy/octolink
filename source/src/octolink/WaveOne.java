@@ -15,6 +15,7 @@ import gameframework.game.OverlapProcessorDefaultImpl;
 import java.awt.Canvas;
 import java.awt.Point;
 
+import octolink.entity.Creep;
 import octolink.entity.Grass;
 import octolink.entity.Link;
 import octolink.entity.Path;
@@ -123,7 +124,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		universe.addGameEntity(link);
 
 		// Creeps definition and inclusion in the universe
-		WarriorCreep creep;
+		Creep creep;
 		for (int t = 0; t < NUMBER_OF_CREEPS; ++t) {
 			GameMovableDriverDefaultImpl creepDriver = new GameMovableDriverDefaultImpl();
 			creepDriver.setmoveBlockerChecker(moveBlockerChecker);

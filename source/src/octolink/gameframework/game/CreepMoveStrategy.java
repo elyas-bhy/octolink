@@ -6,7 +6,7 @@ import gameframework.base.SpeedVectorDefaultImpl;
 
 import java.awt.Point;
 
-import octolink.entity.WarriorCreep;
+import octolink.entity.Creep;
 
 public class CreepMoveStrategy implements MoveStrategy {
 	
@@ -15,10 +15,10 @@ public class CreepMoveStrategy implements MoveStrategy {
 	private final int SPRITE_SIZE = 16;
 
 	private SpeedVector currentMove = new SpeedVectorDefaultImpl(new Point(0, 0));
-	private WarriorCreep creep;
+	private Creep creep;
 	private int[][] map;
 
-	public CreepMoveStrategy(WarriorCreep creep, int[][] map) {
+	public CreepMoveStrategy(Creep creep, int[][] map) {
 		this.creep = creep;
 		this.map = map;
 	}
