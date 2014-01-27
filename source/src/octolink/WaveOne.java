@@ -17,13 +17,16 @@ import java.awt.Point;
 
 import octolink.entity.Creep;
 import octolink.entity.Grass;
-import octolink.entity.Link;
 import octolink.entity.Path;
 import octolink.entity.Spawn;
 import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
 import octolink.entity.Zelda;
+import octolink.entity.link.AbstractLink;
+import octolink.entity.link.FighterLink;
+import octolink.entity.link.DefenderLink;
+import octolink.entity.link.Link;
 import octolink.gameframework.game.CreepMoveStrategy;
 import octolink.gameframework.game.OctolinkGameLevel;
 import octolink.gameframework.game.OctolinkMoveStrategyKeyboard;
@@ -113,7 +116,8 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		}
 		
 		// Link definition and inclusion in the universe
-		Link link = new Link(canvas);
+		AbstractLink link = new Link(canvas);
+		//link = new DefenderLink(link);
 		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
 		MoveStrategyKeyboard keyStr = new OctolinkMoveStrategyKeyboard();
 		linkDriver.setStrategy(keyStr);

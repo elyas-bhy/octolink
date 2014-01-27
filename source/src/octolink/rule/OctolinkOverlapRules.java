@@ -14,8 +14,8 @@ import java.awt.Point;
 import java.util.Vector;
 
 import octolink.entity.Creep;
-import octolink.entity.Link;
 import octolink.entity.WarriorCreep;
+import octolink.entity.link.AbstractLink;
 
 public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	
@@ -53,7 +53,7 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 		super.applyOverlapRules(overlappables);
 	}
 
-	public void overlapRule(Link l, WarriorCreep c) {
+	public void overlapRule(AbstractLink l, WarriorCreep c) {
 		Point a = l.getPosition();
 		SpeedVector creepSpeedVector = c.getSpeedVector();
 		GameMovableDriver oldLinkDriver = l.getDriver();
