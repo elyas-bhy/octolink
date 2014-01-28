@@ -11,7 +11,7 @@ public class OctolinkMoveStrategyKeyboard extends MoveStrategyKeyboard {
 	
 	private final int DEFAULT_SPEED = 8;
 	
-	protected SpeedVector speedVector = new SpeedVectorDefaultImpl(new Point(0,0), 0);
+	protected SpeedVector speedVector = new SpeedVectorDefaultImpl(new Point(0,1), 0);
 
 	public SpeedVector getSpeedVector() {
 		return speedVector;
