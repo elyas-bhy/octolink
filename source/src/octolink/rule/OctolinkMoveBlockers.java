@@ -6,7 +6,7 @@ import octolink.entity.AbstractBlockerTerrain;
 import octolink.entity.Creep;
 import octolink.entity.Grass;
 import octolink.entity.Wall;
-import octolink.entity.link.AbstractLink;
+import octolink.entity.link.Link;
 
 public class OctolinkMoveBlockers extends MoveBlockerRulesApplierDefaultImpl {
 	
@@ -15,11 +15,11 @@ public class OctolinkMoveBlockers extends MoveBlockerRulesApplierDefaultImpl {
 		throw new IllegalMoveException();
 	}
 
-	public void moveBlockerRule(AbstractLink l, Wall w) throws IllegalMoveException {
+	public void moveBlockerRule(Link l, Wall w) throws IllegalMoveException {
 		throw new IllegalMoveException();
 	}
 	
-	public void moveBlockerRule(AbstractLink l, Grass g) throws IllegalMoveException {
+	public void moveBlockerRule(Link l, Grass g) throws IllegalMoveException {
 		
 	}
 	

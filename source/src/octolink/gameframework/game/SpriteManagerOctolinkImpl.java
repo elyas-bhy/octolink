@@ -6,6 +6,7 @@ import gameframework.game.SpriteManager;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,13 +25,15 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 	private final float renderingScale;
 	private final int spriteWidth;
 	private final int spriteHeight;
+	private final Rectangle boundingBox;
 
 	public SpriteManagerOctolinkImpl(String filename, Canvas canvas, float renderingScale,
-			int spriteWidth, int spriteHeight, int[] spriteRows) {
+			int spriteWidth, int spriteHeight, int[] spriteRows, Rectangle boundingBox) {
 		this.renderingScale = renderingScale;
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
 		this.spriteRows = spriteRows;
+		this.boundingBox = boundingBox;
 		image = new DrawableImage(filename, canvas);
 	}
 
@@ -47,14 +50,14 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 	@Override
 	public void draw(Graphics g, Point position) {
 		// Destination image coordinates
-		int dx1 = (int) position.getX();
-		int dy1 = (int) position.getY();
+		int dx1 = (int) position.getX() - (int) boundingBox.getX();
+		int dy1 = (int) position.getY() - (int) boundingBox.getY();
 		int dx2 = dx1 + (int) (renderingScale * spriteWidth * 3);
 		int dy2 = dy1 + (int) (renderingScale * spriteHeight * 3);
 
 		// Source image coordinates
-		int sx1 = spriteNumber * spriteWidth * 3 + spriteWidth;
-		int sy1 = currentRow * spriteHeight * 3 + spriteHeight;
+		int sx1 = spriteNumber * spriteWidth * 3;
+		int sy1 = currentRow * spriteHeight * 3;
 		int sx2 = sx1 + spriteWidth * 3;
 		int sy2 = sy1 + spriteHeight * 3;
 		g.drawImage(image.getImage(), dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,

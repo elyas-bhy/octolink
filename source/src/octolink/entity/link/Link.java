@@ -15,7 +15,7 @@ public class Link extends AbstractLink {
 
 	public Link(Canvas defaultCanvas) {
 		spriteManager = new SpriteManagerOctolinkImpl("images/link_sprites.png", defaultCanvas,
-				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS);
+				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS, getBoundingBox());
 		spriteManager.setTypes("down", "up", "right", "left",
 				"sword-down", "sword-up", "sword-right", "sword-left",
 				"sword-strike-down", "sword-strike-up", "sword-strike-right", "sword-strike-left",
@@ -46,7 +46,8 @@ public class Link extends AbstractLink {
 		moving = true;
 		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
-		g.drawRect(getBoundingBox().x, getBoundingBox().y, getBoundingBox().width, getBoundingBox().height);
+		g.drawRect(getPosition().x, getPosition().y,
+				getBoundingBox().width, getBoundingBox().height);
 	}
 
 	@Override

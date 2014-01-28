@@ -15,11 +15,14 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4,
 		8, 9, 8, 8};
 	public String link_state = "";
-	
+
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return (new Rectangle((int) getPosition().getX(), (int) getPosition().getY(),
-				(int) (SPRITE_WIDTH * RENDERING_SCALE), (int) (SPRITE_HEIGHT * RENDERING_SCALE)));
+		return (new Rectangle(
+				(int) (SPRITE_WIDTH * RENDERING_SCALE),    // boundingBox x1 sprite offset
+				(int) (SPRITE_HEIGHT * RENDERING_SCALE),   // boundingBox y1 sprite offset
+				(int) (SPRITE_WIDTH * RENDERING_SCALE),    // boundingBox width
+				(int) (SPRITE_HEIGHT * RENDERING_SCALE))); // boundingBox height
 	}
 }
