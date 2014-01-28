@@ -26,9 +26,15 @@ public class Link extends AbstractLink {
 
 	@Override
 	public void draw(Graphics g) {
+		if (getSpeedVector().getSpeed() == 0) {
+			moving = false;
+			spriteManager.reset();
+			spriteManager.draw(g, getPosition());
+			return;
+		}
+
 		String spriteType = "";
 		Point tmp = getSpeedVector().getDirection();
-
 		if (tmp.getX() == 1) {
 			spriteType += link_state + "right";
 		} else if (tmp.getX() == -1) {
@@ -37,11 +43,6 @@ public class Link extends AbstractLink {
 			spriteType += link_state + "down";
 		} else if (tmp.getY() == -1) {
 			spriteType += link_state + "up";
-		} else {
-			moving = false;
-			spriteManager.reset();
-			spriteManager.draw(g, getPosition());
-			return;
 		}
 		moving = true;
 		spriteManager.setType(spriteType);
