@@ -40,7 +40,6 @@ public class Link extends AbstractLink {
 		}
 
 		if (stateTransition == 1) {
-			System.out.println("1");
 			spriteManager.setType(spriteType);
 			spriteManager.reset();
 			spriteManager.draw(g, getPosition());
@@ -48,7 +47,6 @@ public class Link extends AbstractLink {
 			return ;
 		}
 		else if (stateTransition == 2) {
-			System.out.println("2");
 			spriteManager.setType("animation-"+spriteType);
 			spriteManager.draw(g, getPosition());
 			for (int i=1; i<SPRITE_ROWS[((OctolinkSpriteManagerImpl) spriteManager).getCurrentRow()]; ++i ) {

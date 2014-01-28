@@ -5,6 +5,7 @@ import java.awt.Graphics;
 public abstract class LinkDecorator extends AbstractLink {
 
 	protected AbstractLink _link;
+	protected int health;
 
 	public LinkDecorator(AbstractLink link) {
 		this._link = link;
