@@ -20,11 +20,11 @@ public class Spawn extends GameMovable implements GameEntity, Overlappable {
 	protected GameUniverse universe;
 	protected OctolinkOverlapRules overlapRules;
 	protected Point position;
-	protected int frequency;
 	protected int runCounter;
+	protected ArrayList<Integer> frequency;
 	protected ArrayList<Creep> creeps;
 
-	public Spawn(GameUniverse univ, OctolinkOverlapRules rules, Point pos, int freq, ArrayList<Creep> crps) {
+	public Spawn(GameUniverse univ, OctolinkOverlapRules rules, Point pos, ArrayList<Integer> freq, ArrayList<Creep> crps) {
 		GameMovableDriverDefaultImpl driver = new GameMovableDriverDefaultImpl();
 		ImmobileMoveStrategy strategy = new ImmobileMoveStrategy();
 		driver.setStrategy(strategy);
@@ -49,7 +49,9 @@ public class Spawn extends GameMovable implements GameEntity, Overlappable {
 	@Override
 	public void oneStepMoveAddedBehavior() {
 		if(creeps.size() > 0) {
-			if(runCounter % frequency == 0) {
+			if(runCounter % frequency.get(0) == 0) {
+				runCounter = 1;
+				frequency.add(frequency.remove(0));
 				Creep creep = creeps.remove(0);
 				creep.setPosition(this.getPosition());
 				universe.addGameEntity(creep);

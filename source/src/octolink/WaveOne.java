@@ -92,6 +92,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		
 		// Creeps definition
 		ArrayList<Creep> creepList = new ArrayList<Creep>();
+		ArrayList<Integer> frequencyList = new ArrayList<Integer>();
 		Creep creep;
 		for (int t = 0; t < NUMBER_OF_CREEPS; ++t) {
 			GameMovableDriverDefaultImpl creepDriver = new GameMovableDriverDefaultImpl();
@@ -102,6 +103,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 			creep.setDriver(creepDriver);
 			creep.setPosition(new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE));
 			creepList.add(creep);
+			frequencyList.add(new Integer(((NUMBER_OF_CREEPS+1) - t)*2));
 		}
 		
 		// Filling up the universe with basic non movable entities and inclusion in the universe
@@ -111,7 +113,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 					universe.addGameEntity(new Path(canvas, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
 				}
 				if (map[i][j] == 1) {
-					universe.addGameEntity(new Spawn(universe, overlapRules, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE), 10, creepList));
+					universe.addGameEntity(new Spawn(universe, overlapRules, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE), frequencyList, creepList));
 				}
 				if (map[i][j] == 2) {
 					universe.addGameEntity(new Wall(canvas, new Point(j * SPRITE_SIZE, i * SPRITE_SIZE)));
