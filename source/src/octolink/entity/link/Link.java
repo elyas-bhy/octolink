@@ -1,7 +1,5 @@
 package octolink.entity.link;
 
-import gameframework.game.SpriteManager;
-
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -11,7 +9,7 @@ import octolink.gameframework.game.OctolinkSpriteManagerImpl;
 public class Link extends AbstractLink {
 
 	private boolean moving;
-	protected final SpriteManager spriteManager;
+	protected final OctolinkSpriteManagerImpl spriteManager;
 
 	public Link(Canvas defaultCanvas) {
 		spriteManager = new OctolinkSpriteManagerImpl("images/link_sprites.png", defaultCanvas,
@@ -30,35 +28,35 @@ public class Link extends AbstractLink {
 		Point tmp = getSpeedVector().getDirection();
 
 		if (tmp.getX() == 1) {
-			spriteType = linkState + "right";
+			spriteType = state.getValue() + "right";
 		} else if (tmp.getX() == -1) {
-			spriteType = linkState + "left";
+			spriteType = state.getValue() + "left";
 		} else if (tmp.getY() == 1) {
-			spriteType = linkState + "down";
+			spriteType = state.getValue() + "down";
 		} else if (tmp.getY() == -1) {
-			spriteType = linkState + "up";
+			spriteType = state.getValue() + "up";
 		}
-
-		if (stateTransition == 1) {
+		
+		if (state.getTransitionType() == 1) {
 			spriteManager.setType(spriteType);
 			spriteManager.reset();
 			spriteManager.draw(g, getPosition());
-			stateTransition = 0;
+			state.setTransitionType(0);
 			return ;
 		}
-		else if (stateTransition == 2) {
-			spriteManager.setType("animation-"+spriteType);
+		else if (state.getTransitionType() == 2) {
+			spriteManager.setType("animation-" + spriteType);
 			spriteManager.draw(g, getPosition());
-			for (int i=1; i<SPRITE_ROWS[((OctolinkSpriteManagerImpl) spriteManager).getCurrentRow()]; ++i ) {
+			for (int i = 1; i < SPRITE_ROWS[spriteManager.getCurrentRow()]; ++i ) {
 				spriteManager.increment();
 				spriteManager.draw(g, getPosition());
 			}
 			spriteManager.setType(spriteType);
 			spriteManager.reset();
-			stateTransition = 0;
-			return ;
+			state.setTransitionType(0);
+			return;
 		}
-
+		
 		if (getSpeedVector().getSpeed() == 0) {
 			moving = false;
 			spriteManager.reset();
@@ -79,4 +77,5 @@ public class Link extends AbstractLink {
 			spriteManager.increment();
 		}
 	}
+	
 }

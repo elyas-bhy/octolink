@@ -16,9 +16,15 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 	public static final float RENDERING_SCALE = 0.7f;
 	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4,
 		8, 9, 8, 8};
-	public int stateTransition = 0;
-	public String linkState = "";
-
+	protected LinkState state;
+	
+	public LinkState getState() {
+		return state;
+	}
+	
+	public void setState(LinkState state) {
+		this.state = state;
+	}
 
 	@Override
 	public Rectangle getBoundingBox() {
@@ -34,20 +40,20 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 		int keycode = event.getKeyCode();
 		switch (keycode) {
 		case KeyEvent.VK_C:
-			linkState = "";
-			stateTransition = 1;
+			state = new NeutralState();
+			state.setTransitionType(1);
 			break;
 		case KeyEvent.VK_V:
-			linkState = "sword-";
-			stateTransition = 1;
+			state = new FighterState();
+			state.setTransitionType(1);
 			break;
 		case KeyEvent.VK_B:
-			linkState = "shield-";
-			stateTransition = 2;
+			state = new DefenderState();
+			state.setTransitionType(2);
 			break;
 		case KeyEvent.VK_G:
-			linkState = "sword-";
-			stateTransition = 2;
+			state = new FighterState();
+			state.setTransitionType(2);
 			break;
 		}
 	}
