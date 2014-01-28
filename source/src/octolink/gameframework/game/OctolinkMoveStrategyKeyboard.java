@@ -1,12 +1,21 @@
 package octolink.gameframework.game;
 
 import gameframework.base.MoveStrategyKeyboard;
+import gameframework.base.SpeedVector;
+import gameframework.base.SpeedVectorDefaultImpl;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 public class OctolinkMoveStrategyKeyboard extends MoveStrategyKeyboard {
 	
+	private final int DEFAULT_SPEED = 8;
+	
+	protected SpeedVector speedVector = new SpeedVectorDefaultImpl(new Point(0,0), 0);
+
+	public SpeedVector getSpeedVector() {
+		return speedVector;
+	}
 
 	@Override
 	public void keyPressed(KeyEvent event) {
@@ -29,6 +38,7 @@ public class OctolinkMoveStrategyKeyboard extends MoveStrategyKeyboard {
 			speedVector.setDirection(new Point(0, 1));
 			break;
 		}
+		speedVector.setSpeed(DEFAULT_SPEED);
 	}
 	
 	@Override
@@ -43,10 +53,9 @@ public class OctolinkMoveStrategyKeyboard extends MoveStrategyKeyboard {
 		case KeyEvent.VK_W:
 		case KeyEvent.VK_DOWN:
 		case KeyEvent.VK_S:
-			speedVector.setDirection(new Point(0, 0));
+			speedVector.setSpeed(0);
 			break;
 		}
 	}
-	
 	
 }
