@@ -15,7 +15,7 @@ import java.util.Map;
  * rows whereas increments of a type are in columns
  * 
  */
-public class SpriteManagerOctolinkImpl implements SpriteManager {
+public class OctolinkSpriteManagerImpl implements SpriteManager {
 
 	private final DrawableImage image;
 	private Map<String, Integer> types;
@@ -27,7 +27,7 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 	private final int spriteHeight;
 	private final Rectangle boundingBox;
 
-	public SpriteManagerOctolinkImpl(String filename, Canvas canvas, float renderingScale,
+	public OctolinkSpriteManagerImpl(String filename, Canvas canvas, float renderingScale,
 			int spriteWidth, int spriteHeight, int[] spriteRows, Rectangle boundingBox) {
 		this.renderingScale = renderingScale;
 		this.spriteWidth = spriteWidth;
@@ -86,5 +86,9 @@ public class SpriteManagerOctolinkImpl implements SpriteManager {
 	@Override
 	public void setIncrement(int increment) {
 		this.spriteNumber = increment;
+	}
+
+	public int getCurrentRow() {
+		return currentRow;
 	}
 }

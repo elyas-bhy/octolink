@@ -6,7 +6,7 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import octolink.gameframework.game.SpriteManagerOctolinkImpl;
+import octolink.gameframework.game.OctolinkSpriteManagerImpl;
 
 public class Link extends AbstractLink {
 
@@ -14,18 +14,51 @@ public class Link extends AbstractLink {
 	protected final SpriteManager spriteManager;
 
 	public Link(Canvas defaultCanvas) {
-		spriteManager = new SpriteManagerOctolinkImpl("images/link_sprites.png", defaultCanvas,
+		spriteManager = new OctolinkSpriteManagerImpl("images/link_sprites.png", defaultCanvas,
 				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS, getBoundingBox());
 		spriteManager.setTypes("down", "up", "right", "left",
 				"sword-down", "sword-up", "sword-right", "sword-left",
-				"sword-strike-down", "sword-strike-up", "sword-strike-right", "sword-strike-left",
-				"shield-down", "shield-up", "shield-right", "shield-left",
-				"shield-moving-down", "shield-moving-up", "shield-moving-right", "shield-moving-left"
+				"animation-sword-down", "animation-sword-up", "animation-sword-right", "animation-sword-left",
+				"animation-shield-down", "animation-shield-up", "animation-shield-right", "animation-shield-left",
+				"shield-down", "shield-up", "shield-right", "shield-left"
 				);
 	}
 
 	@Override
 	public void draw(Graphics g) {
+		String spriteType = "";
+		Point tmp = getSpeedVector().getDirection();
+
+		if (tmp.getX() == 1) {
+			spriteType = linkState + "right";
+		} else if (tmp.getX() == -1) {
+			spriteType = linkState + "left";
+		} else if (tmp.getY() == 1) {
+			spriteType = linkState + "down";
+		} else if (tmp.getY() == -1) {
+			spriteType = linkState + "up";
+		}
+
+		if (stateTransition == 1) {
+			spriteManager.setType(spriteType);
+			spriteManager.reset();
+			spriteManager.draw(g, getPosition());
+			stateTransition = 0;
+			return ;
+		}
+		else if (stateTransition == 2) {
+			spriteManager.setType("animation-"+spriteType);
+			spriteManager.draw(g, getPosition());
+			for (int i=1; i<SPRITE_ROWS[((OctolinkSpriteManagerImpl) spriteManager).getCurrentRow()]; ++i ) {
+				spriteManager.increment();
+				spriteManager.draw(g, getPosition());
+			}
+			spriteManager.setType(spriteType);
+			spriteManager.reset();
+			stateTransition = 0;
+			return ;
+		}
+
 		if (getSpeedVector().getSpeed() == 0) {
 			moving = false;
 			spriteManager.reset();
@@ -33,17 +66,6 @@ public class Link extends AbstractLink {
 			return;
 		}
 
-		String spriteType = "";
-		Point tmp = getSpeedVector().getDirection();
-		if (tmp.getX() == 1) {
-			spriteType += link_state + "right";
-		} else if (tmp.getX() == -1) {
-			spriteType += link_state + "left";
-		} else if (tmp.getY() == 1) {
-			spriteType += link_state + "down";
-		} else if (tmp.getY() == -1) {
-			spriteType += link_state + "up";
-		}
 		moving = true;
 		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
@@ -57,5 +79,4 @@ public class Link extends AbstractLink {
 			spriteManager.increment();
 		}
 	}
-
 }

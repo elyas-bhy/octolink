@@ -24,21 +24,24 @@ public class OctolinkMoveStrategyKeyboard extends MoveStrategyKeyboard {
 		case KeyEvent.VK_RIGHT:
 		case KeyEvent.VK_D:
 			speedVector.setDirection(new Point(1, 0));
+			speedVector.setSpeed(DEFAULT_SPEED);
 			break;
 		case KeyEvent.VK_LEFT:
 		case KeyEvent.VK_A:
 			speedVector.setDirection(new Point(-1, 0));
+			speedVector.setSpeed(DEFAULT_SPEED);
 			break;
 		case KeyEvent.VK_UP:
 		case KeyEvent.VK_W:
 			speedVector.setDirection(new Point(0, -1));
+			speedVector.setSpeed(DEFAULT_SPEED);
 			break;
 		case KeyEvent.VK_DOWN:
 		case KeyEvent.VK_S:
 			speedVector.setDirection(new Point(0, 1));
+			speedVector.setSpeed(DEFAULT_SPEED);
 			break;
 		}
-		speedVector.setSpeed(DEFAULT_SPEED);
 	}
 	
 	@Override

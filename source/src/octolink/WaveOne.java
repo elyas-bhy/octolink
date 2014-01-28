@@ -136,6 +136,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		linkDriver.setStrategy(keyStr);
 		linkDriver.setmoveBlockerChecker(moveBlockerChecker);
 		canvas.addKeyListener(keyStr);
+		canvas.addKeyListener(link);
 		link.setDriver(linkDriver);
 		link.setPosition(new Point(8 * SPRITE_SIZE, 8 * SPRITE_SIZE));
 		universe.addGameEntity(link);
