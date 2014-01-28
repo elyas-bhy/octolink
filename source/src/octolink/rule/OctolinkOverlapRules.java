@@ -16,6 +16,7 @@ import octolink.entity.Creep;
 import octolink.entity.Grass;
 import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
+import octolink.entity.Water;
 import octolink.entity.link.Link;
 
 public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
@@ -72,6 +73,10 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	}
 	
 	public void overlapRule(Link l, Wall w) {
+		l.setPosition(linkStartPos);
+	}
+	
+	public void overlapRule(Link l, Water w) {
 		l.setPosition(linkStartPos);
 	}
 }
