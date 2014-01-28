@@ -24,8 +24,6 @@ import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
 import octolink.entity.Zelda;
 import octolink.entity.link.AbstractLink;
-import octolink.entity.link.FighterLink;
-import octolink.entity.link.DefenderLink;
 import octolink.entity.link.Link;
 import octolink.gameframework.game.CreepMoveStrategy;
 import octolink.gameframework.game.OctolinkGameLevel;

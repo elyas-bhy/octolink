@@ -37,11 +37,10 @@ public class Link extends AbstractLink {
 			spriteType = linkState + "down";
 		} else if (tmp.getY() == -1) {
 			spriteType = linkState + "up";
-		} else {
-			spriteType = linkState + linkPosition;
 		}
 
 		if (stateTransition == 1) {
+			System.out.println("1");
 			spriteManager.setType(spriteType);
 			spriteManager.reset();
 			spriteManager.draw(g, getPosition());
@@ -49,40 +48,26 @@ public class Link extends AbstractLink {
 			return ;
 		}
 		else if (stateTransition == 2) {
-
+			System.out.println("2");
 			spriteManager.setType("animation-"+spriteType);
 			spriteManager.draw(g, getPosition());
-
 			for (int i=1; i<SPRITE_ROWS[((OctolinkSpriteManagerImpl) spriteManager).getCurrentRow()]; ++i ) {
 				spriteManager.increment();
 				spriteManager.draw(g, getPosition());
 			}
-
 			spriteManager.setType(spriteType);
 			spriteManager.reset();
-
 			stateTransition = 0;
 			return ;
 		}
 
-		if (tmp.getX() == 1) {
-			spriteType = linkState + "right";
-			linkPosition = "right";
-		} else if (tmp.getX() == -1) {
-			spriteType = linkState + "left";
-			linkPosition = "left";
-		} else if (tmp.getY() == 1) {
-			spriteType = linkState + "down";
-			linkPosition = "down";
-		} else if (tmp.getY() == -1) {
-			spriteType = linkState + "up";
-			linkPosition = "up";
-		} else {
+		if (getSpeedVector().getSpeed() == 0) {
 			moving = false;
 			spriteManager.reset();
 			spriteManager.draw(g, getPosition());
 			return;
 		}
+
 		moving = true;
 		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());

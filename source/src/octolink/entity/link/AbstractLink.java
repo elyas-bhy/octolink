@@ -18,7 +18,6 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 		8, 9, 8, 8};
 	public int stateTransition = 0;
 	public String linkState = "";
-	public String linkPosition = "down";
 
 
 	@Override
@@ -35,16 +34,16 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 		int keycode = event.getKeyCode();
 		switch (keycode) {
 		case KeyEvent.VK_C:
-			stateTransition = 1;
 			linkState = "";
+			stateTransition = 1;
 			break;
 		case KeyEvent.VK_V:
-			stateTransition = 1;
 			linkState = "sword-";
+			stateTransition = 1;
 			break;
 		case KeyEvent.VK_B:
-			stateTransition = 2;
 			linkState = "shield-";
+			stateTransition = 2;
 			break;
 		}
 	}
