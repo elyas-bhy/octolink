@@ -45,6 +45,10 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 			linkState = "shield-";
 			stateTransition = 2;
 			break;
+		case KeyEvent.VK_G:
+			linkState = "sword-";
+			stateTransition = 2;
+			break;
 		}
 	}
 

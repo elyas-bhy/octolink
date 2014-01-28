@@ -18,7 +18,7 @@ public class Link extends AbstractLink {
 				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS, getBoundingBox());
 		spriteManager.setTypes("down", "up", "right", "left",
 				"sword-down", "sword-up", "sword-right", "sword-left",
-				"sword-strike-down", "sword-strike-up", "sword-strike-right", "sword-strike-left",
+				"animation-sword-down", "animation-sword-up", "animation-sword-right", "animation-sword-left",
 				"animation-shield-down", "animation-shield-up", "animation-shield-right", "animation-shield-left",
 				"shield-down", "shield-up", "shield-right", "shield-left"
 				);
