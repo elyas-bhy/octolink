@@ -4,7 +4,6 @@ import gameframework.base.MoveStrategyStraightLine;
 import gameframework.base.ObservableValue;
 import gameframework.base.Overlap;
 import gameframework.base.SpeedVector;
-import gameframework.base.SpeedVectorDefaultImpl;
 import gameframework.game.GameMovableDriver;
 import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverse;
@@ -14,6 +13,8 @@ import java.awt.Point;
 import java.util.Vector;
 
 import octolink.entity.Creep;
+import octolink.entity.Grass;
+import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.link.Link;
 
@@ -68,5 +69,9 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 		for(int i = 0; i < 3; ++i)
 			l.oneStepMove();
 		l.setDriver(oldLinkDriver);
+	}
+	
+	public void overlapRule(Link l, Wall w) {
+		l.setPosition(linkStartPos);
 	}
 }

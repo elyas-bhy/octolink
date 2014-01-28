@@ -1,11 +1,11 @@
 package octolink.entity.link;
 
-import java.awt.Rectangle;
-
 import gameframework.base.Drawable;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
+
+import java.awt.Rectangle;
 
 public abstract class AbstractLink extends GameMovable implements Drawable, GameEntity, Overlappable {
 
