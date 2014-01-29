@@ -51,6 +51,7 @@ public class Spawn extends GameMovable implements GameEntity, Overlappable {
 		if(creeps.size() > 0) {
 			if(runCounter % frequency.get(0) == 0) {
 				runCounter = 1;
+				// make frequency list circular in order to apply patterns
 				frequency.add(frequency.remove(0));
 				Creep creep = creeps.remove(0);
 				creep.setPosition(this.getPosition());

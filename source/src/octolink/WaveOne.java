@@ -71,7 +71,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 	
 	
 	public static final int SPRITE_SIZE = 16;
-	public static final int NUMBER_OF_CREEPS = 5;
+	public static final int NUMBER_OF_CREEPS = 20;
 
 	@Override
 	protected void init() {
@@ -103,7 +103,10 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 			creep.setDriver(creepDriver);
 			creep.setPosition(new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE));
 			creepList.add(creep);
-			frequencyList.add(new Integer(((NUMBER_OF_CREEPS+1) - t)*2));
+		}
+		
+		for(int d = 10; d > 0; d = d-2) {
+			frequencyList.add(new Integer(d));
 		}
 		
 		// Filling up the universe with basic non movable entities and inclusion in the universe
