@@ -21,19 +21,18 @@ public class FighterState extends AbstractState {
 
 	@Override
 	public void collide(Link l, Creep c) {
-
-		Point a = l.getPosition();
+		Point p = l.getPosition();
 		SpeedVector creepSpeedVector = c.getSpeedVector();
 		GameMovableDriver oldLinkDriver = l.getDriver();
 
 		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
 		Point destination = new Point(
-				(int) (a.getX() + creepSpeedVector.getDirection().getX() * 20),
-				(int) (a.getY() + creepSpeedVector.getDirection().getY() * 20));
+				(int) (p.getX() + creepSpeedVector.getDirection().getX() * 20),
+				(int) (p.getY() + creepSpeedVector.getDirection().getY() * 20));
 
-		linkDriver.setStrategy(new MoveStrategyStraightLine(a, destination));
+		linkDriver.setStrategy(new MoveStrategyStraightLine(p, destination));
 		l.setDriver(linkDriver);
-		for(int i = 0; i < 3; ++i)
+		for (int i = 0; i < 3; ++i)
 			l.oneStepMove();
 		l.setDriver(oldLinkDriver);
 	}
