@@ -4,6 +4,7 @@ import gameframework.base.MoveStrategyKeyboard;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
+import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverseDefaultImpl;
 import gameframework.game.GameUniverseViewPortDefaultImpl;
 import gameframework.game.MoveBlockerChecker;
@@ -25,7 +26,6 @@ import octolink.entity.link.DefenderState;
 import octolink.entity.link.Link;
 import octolink.gameframework.game.CreepMoveStrategy;
 import octolink.gameframework.game.OctolinkGameLevel;
-import octolink.gameframework.game.OctolinkGameMovableDriver;
 import octolink.gameframework.game.OctolinkMoveBlockerChecker;
 import octolink.gameframework.game.OctolinkMoveStrategyKeyboard;
 import octolink.gameframework.game.OctolinkOverlapProcessor;
@@ -80,7 +80,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		MoveBlockerChecker moveBlockerChecker = new OctolinkMoveBlockerChecker();
 		moveBlockerChecker.setMoveBlockerRules(new OctolinkMoveBlockers());
 		
-		OctolinkOverlapRules overlapRules = new OctolinkOverlapRules(new Point(8 * SPRITE_SIZE, 8 * SPRITE_SIZE),
+		OctolinkOverlapRules overlapRules = new OctolinkOverlapRules(new Point(8 * SPRITE_SIZE, 10 * SPRITE_SIZE),
 				new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE), life[0], score[0], endOfGame);
 		overlapProcessor.setOverlapRules(overlapRules);
 
@@ -95,7 +95,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		ArrayList<Integer> frequencyList = new ArrayList<Integer>();
 		Creep creep;
 		for (int t = 0; t < NUMBER_OF_CREEPS; ++t) {
-			OctolinkGameMovableDriver creepDriver = new OctolinkGameMovableDriver();
+			GameMovableDriverDefaultImpl creepDriver = new GameMovableDriverDefaultImpl();
 			creepDriver.setmoveBlockerChecker(moveBlockerChecker);
 			creep = new WarriorCreep(canvas);
 			CreepMoveStrategy strategy = new CreepMoveStrategy(creep, map);
@@ -135,7 +135,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		
 		// Link definition and inclusion in the universe
 		Link link = new Link(canvas);
-		OctolinkGameMovableDriver linkDriver = new OctolinkGameMovableDriver();
+		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
 		MoveStrategyKeyboard keyStr = new OctolinkMoveStrategyKeyboard();
 		linkDriver.setStrategy(keyStr);
 		linkDriver.setmoveBlockerChecker(moveBlockerChecker);
