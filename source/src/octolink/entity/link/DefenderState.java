@@ -17,7 +17,7 @@ public class DefenderState extends AbstractState {
 	}
 
 	@Override
-	public void collide(AbstractLink l, Creep c) {
+	public void collide(Link l, Creep c) {
 		Point a = l.getPosition();
 		SpeedVector creepSpeedVector = c.getSpeedVector();
 		GameMovableDriver oldLinkDriver = l.getDriver();
@@ -46,7 +46,7 @@ public class DefenderState extends AbstractState {
 	}
 
 	@Override
-	public void collideFront(AbstractLink l, Creep c) {Point a = l.getPosition();
+	public void collideFront(Link l, Creep c) {Point a = l.getPosition();
 	SpeedVector creepSpeedVector = c.getSpeedVector();
 	GameMovableDriver oldLinkDriver = l.getDriver();
 	

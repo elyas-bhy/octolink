@@ -7,7 +7,9 @@ import gameframework.game.GameMovableDriver;
 import gameframework.game.GameMovableDriverDefaultImpl;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 
+import octolink.Utils;
 import octolink.entity.Creep;
 
 public class FighterState extends AbstractState {
@@ -18,7 +20,7 @@ public class FighterState extends AbstractState {
 	}
 
 	@Override
-	public void collide(AbstractLink l, Creep c) {
+	public void collide(Link l, Creep c) {
 
 		Point a = l.getPosition();
 		SpeedVector creepSpeedVector = c.getSpeedVector();
@@ -47,7 +49,7 @@ public class FighterState extends AbstractState {
 	}
 
 	@Override
-	public void collideFront(AbstractLink abstractLink, Creep c) {
+	public void collideFront(Link abstractLink, Creep c) {
 		SpeedVector creepSpeedVector = c.getSpeedVector();
 		GameMovableDriver oldCreepDriver = c.getDriver();
 
@@ -61,4 +63,26 @@ public class FighterState extends AbstractState {
 		c.setSpeedVector(creepSpeedVector);
 	}
 
+	public Rectangle getBoundingBox(int spriteWidth, int spriteHeight, float renderingScale, Point p) {
+		int x = (int) (spriteWidth * renderingScale);
+		int y = (int) (spriteHeight * renderingScale);
+		int width = (int) (spriteWidth * renderingScale);
+		int height = (int) (spriteHeight * renderingScale);
+		
+		if (Utils.getOrientation(p) == "right") {
+			width *= 2;
+		}
+		else if (Utils.getOrientation(p) == "left") {
+			x = 0;
+			width *= 2;
+		}
+		else if (Utils.getOrientation(p) == "down") {
+			height *= 2;
+		}
+		else if (Utils.getOrientation(p) == "up") {
+			y = 0;
+			height *= 2;
+		}
+		return new Rectangle(x, y, width, height);
+	}
 }

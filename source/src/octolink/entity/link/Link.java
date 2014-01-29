@@ -1,19 +1,36 @@
 package octolink.entity.link;
 
+import gameframework.base.Drawable;
+import gameframework.base.Overlappable;
+import gameframework.game.GameEntity;
+import gameframework.game.GameMovable;
+
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import octolink.gameframework.game.OctolinkSpriteManagerImpl;
+import octolink.Utils;
+import octolink.gameframework.game.OctolinkSpriteManager;
 
-public class Link extends AbstractLink {
+public class Link extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
 
+	public static final int SPRITE_WIDTH = 24;
+	public static final int SPRITE_HEIGHT = 24;
+	public static final float RENDERING_SCALE = 0.7f;
+	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4,
+		8, 9, 8, 8};
+	protected LinkState state;
 	private boolean moving;
-	protected final OctolinkSpriteManagerImpl spriteManager;
+	protected final OctolinkSpriteManager spriteManager;
+	
 
 	public Link(Canvas defaultCanvas) {
-		spriteManager = new OctolinkSpriteManagerImpl("images/link_sprites.png", defaultCanvas,
-				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS, getBoundingBox());
+		state = new NeutralState();
+		spriteManager = new OctolinkSpriteManager("images/link_sprites.png", defaultCanvas,
+				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS);
 		spriteManager.setTypes("down", "up", "right", "left",
 				"sword-down", "sword-up", "sword-right", "sword-left",
 				"animation-sword-down", "animation-sword-up", "animation-sword-right", "animation-sword-left",
@@ -24,25 +41,22 @@ public class Link extends AbstractLink {
 
 	@Override
 	public void draw(Graphics g) {
+		// display boundingBox
+		g.drawRect(getPosition().x + (int)getBoundingBox().getX(),
+				getPosition().y + (int)getBoundingBox().getY(),
+				getBoundingBox().width, getBoundingBox().height);
+		
 		String spriteType = "";
 		Point tmp = getSpeedVector().getDirection();
 
-		if (tmp.getX() == 1) {
-			spriteType = state.getValue() + "right";
-		} else if (tmp.getX() == -1) {
-			spriteType = state.getValue() + "left";
-		} else if (tmp.getY() == 1) {
-			spriteType = state.getValue() + "down";
-		} else if (tmp.getY() == -1) {
-			spriteType = state.getValue() + "up";
-		}
+		spriteType = state.getValue() + Utils.getOrientation(tmp);
 		
 		if (state.getTransitionType() == 1) {
 			spriteManager.setType(spriteType);
 			spriteManager.reset();
 			spriteManager.draw(g, getPosition());
 			state.setTransitionType(0);
-			return ;
+			return;
 		}
 		else if (state.getTransitionType() == 2) {
 			spriteManager.setType("animation-" + spriteType);
@@ -67,8 +81,6 @@ public class Link extends AbstractLink {
 		moving = true;
 		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
-		g.drawRect(getPosition().x, getPosition().y,
-				getBoundingBox().width, getBoundingBox().height);
 	}
 
 	@Override
@@ -76,6 +88,52 @@ public class Link extends AbstractLink {
 		if (moving) {
 			spriteManager.increment();
 		}
+	}
+	public LinkState getState() {
+		return state;
+	}
+	
+	public void setState(LinkState state) {
+		this.state = state;
+	}
+
+	@Override
+	public Rectangle getBoundingBox() {
+		Point p = getSpeedVector().getDirection();
+		return this.state.getBoundingBox(SPRITE_WIDTH, SPRITE_HEIGHT, RENDERING_SCALE, p);			
+	}
+
+	@Override
+	public void keyPressed(KeyEvent event) {
+		int keycode = event.getKeyCode();
+		switch (keycode) {
+		case KeyEvent.VK_C:
+			state = new NeutralState();
+			state.setTransitionType(1);
+			break;
+		case KeyEvent.VK_V:
+			state = new FighterState();
+			state.setTransitionType(1);
+			break;
+		case KeyEvent.VK_B:
+			state = new DefenderState();
+			state.setTransitionType(2);
+			break;
+		case KeyEvent.VK_G:
+			state = new FighterState();
+			state.setTransitionType(2);
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent event) {
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent event) {
+
 	}
 	
 }
