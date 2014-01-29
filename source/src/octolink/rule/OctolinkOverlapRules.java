@@ -13,7 +13,6 @@ import java.awt.Point;
 import java.util.Vector;
 
 import octolink.entity.Creep;
-import octolink.entity.Grass;
 import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
