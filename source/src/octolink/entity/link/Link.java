@@ -42,30 +42,16 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 
 	@Override
 	public void draw(Graphics g) {
-		// display boundingBox
+		// Display boundingBox
 		g.drawRect(getPosition().x + (int)getBoundingBox().getX(),
 				getPosition().y + (int)getBoundingBox().getY(),
 				getBoundingBox().width, getBoundingBox().height);
 
-		Point tmp = getSpeedVector().getDirection();
-		String spriteType = state.getValue() + Utils.getOrientation(tmp);
-
-		if (state.getTransitionType() == 1) {
-			spriteManager.setType(spriteType);
-			spriteManager.reset();
-			spriteManager.draw(g, getPosition());
-			state.setTransitionType(0);
-			return;
-		}
-		else if (state.getTransitionType() == 2) {
-			spriteManager.setType("animation-" + spriteType);
-			spriteManager.draw(g, getPosition());
-			for (int i = 1; i < SPRITE_ROWS[spriteManager.getCurrentRow()]; ++i ) {
-				spriteManager.increment();
-				spriteManager.draw(g, getPosition());
-			}
-			spriteManager.setType(spriteType);
-			spriteManager.reset();
+		Point p = getSpeedVector().getDirection();
+		String spriteType = state.getValue() + Utils.getOrientation(p);
+		
+		if (state.getTransitionType() != 0) {
+			spriteManager.handleAnimation(this, g, spriteType);
 			state.setTransitionType(0);
 			return;
 		}
@@ -73,12 +59,11 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		if (getSpeedVector().getSpeed() == 0) {
 			moving = false;
 			spriteManager.reset();
-			spriteManager.draw(g, getPosition());
-			return;
+		} else {
+			moving = true;
+			spriteManager.setType(spriteType);
 		}
 
-		moving = true;
-		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
 	}
 
@@ -88,6 +73,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			spriteManager.increment();
 		}
 	}
+	
 	public LinkState getState() {
 		return state;
 	}
