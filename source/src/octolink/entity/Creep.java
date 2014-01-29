@@ -54,5 +54,13 @@ public abstract class Creep extends GameMovable implements Drawable, GameEntity,
 	public void oneStepMoveAddedBehavior() {
 		spriteManager.increment();
 	}
+
+	public int damage() {
+		return 0;
+	}
+	
+	public int parry(int damage) {
+		return 0 - damage;
+	}
 	
 }

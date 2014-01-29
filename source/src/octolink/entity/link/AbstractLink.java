@@ -1,13 +1,17 @@
 package octolink.entity.link;
 
+import gameframework.base.Drawable;
+import gameframework.base.Overlappable;
+import gameframework.base.SpeedVector;
+import gameframework.game.GameEntity;
+import gameframework.game.GameMovable;
+
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import gameframework.base.Drawable;
-import gameframework.base.Overlappable;
-import gameframework.game.GameEntity;
-import gameframework.game.GameMovable;
+import octolink.entity.Creep;
 
 public abstract class AbstractLink extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
 
@@ -16,12 +20,13 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 	public static final float RENDERING_SCALE = 0.7f;
 	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4,
 		8, 9, 8, 8};
+	public int health;
 	protected LinkState state;
-	
+
 	public LinkState getState() {
 		return state;
 	}
-	
+
 	public void setState(LinkState state) {
 		this.state = state;
 	}
@@ -66,5 +71,21 @@ public abstract class AbstractLink extends GameMovable implements Drawable, Game
 	@Override
 	public void keyTyped(KeyEvent event) {
 
+	}
+
+	public void collide(Creep c) {
+		Point linkSVDir, creepSVDir;
+		SpeedVector linkSV, creepSV;
+		linkSV = this.getSpeedVector();
+		creepSV = c.getSpeedVector();
+		linkSVDir = linkSV.getDirection();
+		creepSVDir = creepSV.getDirection();
+		if((linkSVDir.getX() == -creepSVDir.getX() && linkSVDir.getX() != 0) ||
+				linkSVDir.getY() == -creepSVDir.getY() && linkSVDir.getY() != 0) {
+			this.state.collideFront(this, c);
+		} else {
+			this.state.collide(this, c);
+			this.health += this.state.parry(c.damage());
+		}
 	}
 }

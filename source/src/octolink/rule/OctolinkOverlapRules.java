@@ -55,20 +55,7 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	}
 
 	public void overlapRule(Link l, WarriorCreep c) {
-		Point a = l.getPosition();
-		SpeedVector creepSpeedVector = c.getSpeedVector();
-		GameMovableDriver oldLinkDriver = l.getDriver();
-		
-		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
-		Point destination = new Point(
-					(int) (a.getX() + creepSpeedVector.getDirection().getX() * 100),
-					(int) (a.getY() + creepSpeedVector.getDirection().getY() * 100));
-
-		linkDriver.setStrategy(new MoveStrategyStraightLine(a, destination));
-		l.setDriver(linkDriver);
-		for(int i = 0; i < 3; ++i)
-			l.oneStepMove();
-		l.setDriver(oldLinkDriver);
+		l.collide(c);
 	}
 	
 	public void overlapRule(Link l, Wall w) {
