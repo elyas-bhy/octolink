@@ -2,6 +2,7 @@ package octolink.entity.link;
 
 import gameframework.base.Drawable;
 import gameframework.base.Overlappable;
+import gameframework.base.SpeedVector;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 
@@ -13,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import octolink.Utils;
+import octolink.entity.WarriorCreep;
 import octolink.gameframework.game.OctolinkSpriteManager;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
@@ -25,7 +27,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	protected LinkState state;
 	private boolean moving;
 	protected final OctolinkSpriteManager spriteManager;
-	
+
 
 	public Link(Canvas defaultCanvas) {
 		state = new NeutralState();
@@ -45,12 +47,12 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		g.drawRect(getPosition().x + (int)getBoundingBox().getX(),
 				getPosition().y + (int)getBoundingBox().getY(),
 				getBoundingBox().width, getBoundingBox().height);
-		
+
 		String spriteType = "";
 		Point tmp = getSpeedVector().getDirection();
 
 		spriteType = state.getValue() + Utils.getOrientation(tmp);
-		
+
 		if (state.getTransitionType() == 1) {
 			spriteManager.setType(spriteType);
 			spriteManager.reset();
@@ -70,7 +72,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			state.setTransitionType(0);
 			return;
 		}
-		
+
 		if (getSpeedVector().getSpeed() == 0) {
 			moving = false;
 			spriteManager.reset();
@@ -92,7 +94,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public LinkState getState() {
 		return state;
 	}
-	
+
 	public void setState(LinkState state) {
 		this.state = state;
 	}
@@ -135,5 +137,22 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public void keyTyped(KeyEvent event) {
 
 	}
-	
+
+	public void collide(WarriorCreep c) {
+		Point linkSVDir, creepSVDir;
+		SpeedVector linkSV, creepSV;
+		linkSV = this.getSpeedVector();
+		creepSV = c.getSpeedVector();
+		linkSVDir = linkSV.getDirection();
+		creepSVDir = creepSV.getDirection();
+		if((linkSVDir.getX() == -creepSVDir.getX() && linkSVDir.getX() != 0) ||
+				linkSVDir.getY() == -creepSVDir.getY() && linkSVDir.getY() != 0) {
+			this.state.collideFront(this, c);
+		} else {
+			this.state.collide(this, c);
+			//this.health += this.state.parry(c.damage());
+		}
+
+	}
+
 }
