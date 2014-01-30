@@ -9,7 +9,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import octolink.entity.Creep;
-import octolink.gameframework.base.Sprite;
+import octolink.util.Sprite;
 
 public abstract class AbstractState implements LinkState {
 
@@ -50,7 +50,6 @@ public abstract class AbstractState implements LinkState {
 			l.oneStepMove();
 		l.setDriver(oldLinkDriver);
 		l.parry(c.damage());
-		System.out.println("Health: " + l.getHealth());
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import octolink.entity.link.Link;
-import octolink.gameframework.base.Sprite;
+import octolink.util.Sprite;
 
 /**
  * This implementation of {@link SpriteManager} assumes that sprite types are in
