@@ -94,6 +94,7 @@ public class OctolinkSpriteManager implements SpriteManager {
 			draw(g, l.getPosition());
 			break;
 		case 2:
+			l.setStricking(false);
 			setType("animation-" + spriteType);
 			draw(g, l.getPosition());
 			for (int i = 1; i < sprite.getRows()[getCurrentRow()]; ++i ) {

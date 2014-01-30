@@ -27,11 +27,10 @@ public class DefenderState extends AbstractState {
 	@Override
 	public void collideFront(Link l, Creep c) {
 		SpeedVector creepSpeedVector = c.getSpeedVector();
-
 		c.setSpeedVector(new SpeedVectorDefaultImpl(
 				new Point((int)-creepSpeedVector.getDirection().getX(),
-						(int)-creepSpeedVector.getDirection().getY()),
-						creepSpeedVector.getSpeed()*10));
+						  (int)-creepSpeedVector.getDirection().getY()),
+						  creepSpeedVector.getSpeed()*10));
 
 		for (int i = 0; i < 3; ++i) {
 			c.oneStepMove();

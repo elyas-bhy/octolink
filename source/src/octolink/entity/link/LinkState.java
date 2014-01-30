@@ -1,10 +1,8 @@
 package octolink.entity.link;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 import octolink.entity.Creep;
-import octolink.util.Sprite;
 
 public interface LinkState {
 	
@@ -16,6 +14,6 @@ public interface LinkState {
 	public int parryFront(int damage);
 	public void collide(Link l, Creep c);
 	public void collideFront(Link l, Creep c);
-	public Rectangle getBoundingBox(Sprite sprite, Point p);
+	public Rectangle getBoundingBox(Link l);
 
 }

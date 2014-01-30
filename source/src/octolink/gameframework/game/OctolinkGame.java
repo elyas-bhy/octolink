@@ -64,7 +64,7 @@ public class OctolinkGame implements Game, Observer {
 			life[i] = new ObservableValue<Integer>(0);
 			lifeZelda[i] = new ObservableValue<Integer>(0);
 		}
-		lifeText = new Label("Lives:");
+		lifeText = new Label("Link Lives:");
 		lifeZeldaText = new Label("Zelda Lives:");
 		scoreText = new Label("Score:");
 		information = new Label("State:");
