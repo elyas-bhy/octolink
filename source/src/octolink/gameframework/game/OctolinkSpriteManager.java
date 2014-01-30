@@ -61,8 +61,9 @@ public class OctolinkSpriteManager implements SpriteManager {
 	@Override
 	public void setType(String type) {
 		if (!types.containsKey(type)) {
-			throw new IllegalArgumentException(type
-					+ " is not a valid type for this sprite manager.");
+			//throw new IllegalArgumentException(type
+				//	+ " is not a valid type for this sprite manager.");
+			return;
 		}
 		this.currentRow = types.get(type);
 	}
