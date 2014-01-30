@@ -106,7 +106,6 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 			creep.setDriver(creepDriver);
 			creep.setPosition(new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE));
 			creepList.add(creep);
-			overlapRules.addCreep(creep);
 		}
 		
 		for(int d = 10; d > 0; d = d-2) {
