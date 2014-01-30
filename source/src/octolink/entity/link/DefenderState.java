@@ -15,12 +15,6 @@ public class DefenderState extends AbstractState {
 	public String getValue() {
 		return "shield-";
 	}
-
-	@Override
-	public int parry(int damage) {
-		return 0;
-		
-	}
 	
 	@Override
 	public void collideFront(Link l, Creep c) {Point a = l.getPosition();
@@ -37,6 +31,13 @@ public class DefenderState extends AbstractState {
 	for(int i = 0; i < 3; ++i)
 		l.oneStepMove();
 	l.setDriver(oldLinkDriver);
+	l.parryFront(c.damage());
+	}
+	
+	@Override
+	public int parryFront(int damage) {
+		return 0;
+		
 	}
 
 	@Override

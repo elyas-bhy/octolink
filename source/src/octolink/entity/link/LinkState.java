@@ -13,6 +13,7 @@ public interface LinkState {
 	public void collide(Link l, Creep c);
 	public void collideFront(Link l, Creep c);
 	public int parry(int damage);
+	public int parryFront(int damage);
 	public int strike();
 	public Rectangle getBoundingBox(int spriteWidth, int spriteHeight, float renderingScale, Point p);
 

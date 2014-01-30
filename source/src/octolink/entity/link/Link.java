@@ -26,6 +26,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		8, 9, 8, 8};
 	protected LinkState state;
 	private boolean moving;
+	private int health = 3;
 	protected final OctolinkSpriteManager spriteManager;
 
 
@@ -98,6 +99,14 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public void setState(LinkState state) {
 		this.state = state;
 	}
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	public void setHealth(int h) {
+		health = h;
+	}
 
 	@Override
 	public Rectangle getBoundingBox() {
@@ -150,9 +159,19 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			this.state.collideFront(this, c);
 		} else {
 			this.state.collide(this, c);
-			//this.health += this.state.parry(c.damage());
 		}
+	}
+	
+	public int strike() {
+		return this.state.strike();
+	}
+	
+	public void parry(int damage) {
+		this.health -= this.state.parry(damage);
+	}
 
+	public void parryFront(int damage) {
+		this.health -= this.state.parryFront(damage);
 	}
 
 }

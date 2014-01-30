@@ -1,11 +1,7 @@
 package octolink.rule;
 
-import gameframework.base.MoveStrategyStraightLine;
 import gameframework.base.ObservableValue;
 import gameframework.base.Overlap;
-import gameframework.base.SpeedVector;
-import gameframework.game.GameMovableDriver;
-import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverse;
 import gameframework.game.OverlapRulesApplierDefaultImpl;
 
@@ -56,6 +52,13 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 
 	public void overlapRule(Link l, WarriorCreep c) {
 		l.collide(c);
+		if(c.getHealth() <= 0) {
+			universe.removeGameEntity(c);
+			creeps.remove(c);
+		} else if(l.getHealth() <= 0){
+			l.setHealth(3);
+			l.setPosition(linkStartPos);
+		}
 	}
 	
 	public void overlapRule(Link l, Wall w) {

@@ -18,34 +18,16 @@ public class FighterState extends AbstractState {
 	public String getValue() {
 		return "sword-";
 	}
-
+	
 	@Override
-	public void collide(Link l, Creep c) {
-
-		Point a = l.getPosition();
-		SpeedVector creepSpeedVector = c.getSpeedVector();
-		GameMovableDriver oldLinkDriver = l.getDriver();
-
-		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
-		Point destination = new Point(
-				(int) (a.getX() + creepSpeedVector.getDirection().getX() * 20),
-				(int) (a.getY() + creepSpeedVector.getDirection().getY() * 20));
-
-		linkDriver.setStrategy(new MoveStrategyStraightLine(a, destination));
-		l.setDriver(linkDriver);
-		for(int i = 0; i < 3; ++i)
-			l.oneStepMove();
-		l.setDriver(oldLinkDriver);
-	}
-
-	@Override
-	public int parry(int damage) {
+	public int parryFront(int damage) {
 		return 0;
+		
 	}
 
 	@Override
 	public int strike() {
-		return 0;
+		return 3;
 	}
 
 	@Override
@@ -61,6 +43,7 @@ public class FighterState extends AbstractState {
 			c.oneStepMove();
 		c.setDriver(oldCreepDriver);
 		c.setSpeedVector(creepSpeedVector);
+		c.parry(strike());
 	}
 
 	public Rectangle getBoundingBox(int spriteWidth, int spriteHeight, float renderingScale, Point p) {

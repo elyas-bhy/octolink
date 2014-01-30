@@ -40,6 +40,8 @@ public abstract class AbstractState implements LinkState {
 		for(int i = 0; i < 3; ++i)
 			l.oneStepMove();
 		l.setDriver(oldLinkDriver);
+		l.parry(c.damage());
+		System.out.println("Health: " + l.getHealth());
 	}
 
 	@Override
@@ -47,6 +49,14 @@ public abstract class AbstractState implements LinkState {
 		collide(l, c);		
 	}
 
+	public int parry(int damage) {
+		return damage;
+	}
+	
+	public int parryFront(int damage) {
+		return parry(damage);
+	}
+	
 	@Override
 	public Rectangle getBoundingBox(int spriteWidth, int spriteHeight, float renderingScale, Point p) {
 		return new Rectangle(

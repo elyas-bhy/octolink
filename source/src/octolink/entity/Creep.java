@@ -20,6 +20,7 @@ public abstract class Creep extends GameMovable implements Drawable, GameEntity,
 	private final SpriteManagerDefaultImpl spriteManager;
 	protected static DrawableImage image = null;
 	protected boolean active = true;
+	protected int health = 10;
 
 	public Creep(Canvas defaultCanvas, String gif) {
 		spriteManager = new SpriteManagerDefaultImpl(gif, defaultCanvas, RENDERING_SIZE, 6);
@@ -49,6 +50,10 @@ public abstract class Creep extends GameMovable implements Drawable, GameEntity,
 		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
 	}
+	
+	public int getHealth() {
+		return health;
+	}
 
 	@Override
 	public void oneStepMoveAddedBehavior() {
@@ -56,11 +61,11 @@ public abstract class Creep extends GameMovable implements Drawable, GameEntity,
 	}
 
 	public int damage() {
-		return 0;
+		return 1;
 	}
 	
-	public int parry(int damage) {
-		return 0 - damage;
+	public void parry(int damage) {
+		health -= damage;
 	}
 	
 }
