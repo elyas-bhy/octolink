@@ -53,6 +53,7 @@ public class OctolinkSpriteManager implements SpriteManager {
 		int sy1 = currentRow * sprite.getHeight() * 3;
 		int sx2 = sx1 + sprite.getWidth() * 3;
 		int sy2 = sy1 + sprite.getHeight() * 3;
+
 		g.drawImage(image.getImage(), dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,
 				null);
 	}
@@ -84,7 +85,7 @@ public class OctolinkSpriteManager implements SpriteManager {
 	public int getCurrentRow() {
 		return currentRow;
 	}
-	
+
 	public void handleAnimation(Link l, Graphics g, String spriteType) {
 		switch(l.getState().getTransitionType()) {
 		case 1:
@@ -104,5 +105,5 @@ public class OctolinkSpriteManager implements SpriteManager {
 			break;
 		}
 	}
-	
+
 }
