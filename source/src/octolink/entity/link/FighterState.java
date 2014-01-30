@@ -28,16 +28,15 @@ public class FighterState extends AbstractState {
 	@Override
 	public void collideFront(Link abstractLink, Creep c) {
 		SpeedVector creepSpeedVector = c.getSpeedVector();
-		GameMovableDriver oldCreepDriver = c.getDriver();
-
 		c.setSpeedVector(new SpeedVectorDefaultImpl(
 				new Point((int)-creepSpeedVector.getDirection().getX(),
 						(int)-creepSpeedVector.getDirection().getY()),
 						creepSpeedVector.getSpeed()*10));
 		for(int i = 0; i < 3; ++i)
 			c.oneStepMove();
-		c.setDriver(oldCreepDriver);
-		c.setSpeedVector(creepSpeedVector);
+		Point invertDirection = new Point((int)-c.getSpeedVector().getDirection().getX(),
+										(int)-c.getSpeedVector().getDirection().getY());
+		c.setSpeedVector(new SpeedVectorDefaultImpl(invertDirection));
 		c.parry(strike());
 	}
 
