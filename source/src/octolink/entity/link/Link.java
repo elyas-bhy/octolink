@@ -6,6 +6,7 @@ import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -18,16 +19,16 @@ import octolink.util.Sprite;
 import octolink.util.Utils;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
-	
+
 	private static final int DEFAULT_INULNERABILITY_TICKS = 30;
-	
+
 	private int health = 3;
 	private boolean moving;
 	private Sprite sprite;
 	protected LinkState state;
 	protected int invulnerableTicks;
 	protected final OctolinkSpriteManager spriteManager;
-	
+
 	public Link(Canvas defaultCanvas) {
 		int[] rows = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8, 9, 8, 8};
 		sprite = new Sprite("images/link_sprites.png", 24, 24, 1.0f, rows);
@@ -51,7 +52,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 
 		Point p = getSpeedVector().getDirection();
 		String spriteType = state.getValue() + Utils.getOrientation(p);
-		
+
 		if (state.getTransitionType() != 0) {
 			spriteManager.handleAnimation(this, g, spriteType);
 			state.setTransitionType(0);
@@ -66,7 +67,12 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			spriteManager.setType(spriteType);
 		}
 
+		Color linkDamaged = new Color(255, 0, 0);
+		if (invulnerableTicks > 0)
+			g.setXORMode(linkDamaged);
+
 		spriteManager.draw(g, getPosition());
+		g.setPaintMode();
 	}
 
 	@Override
@@ -77,7 +83,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			spriteManager.increment();
 		}
 	}
-	
+
 	public LinkState getState() {
 		return state;
 	}
@@ -85,15 +91,15 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public void setState(LinkState state) {
 		this.state = state;
 	}
-	
+
 	public int getHealth() {
 		return health;
 	}
-	
+
 	public void setHealth(int h) {
 		health = h;
 	}
-	
+
 	public int getInvulnerableTicks() {
 		return invulnerableTicks;
 	}
@@ -105,7 +111,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public void setInvulnerableTicks(int ticks) {
 		invulnerableTicks = ticks;
 	}
-	
+
 	@Override
 	public Rectangle getBoundingBox() {
 		Point p = getSpeedVector().getDirection();
@@ -155,11 +161,11 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			this.state.collide(this, c);
 		}
 	}
-	
+
 	public int strike() {
 		return state.strike();
 	}
-	
+
 	public void parry(int damage) {
 		this.health -= state.parry(damage);
 	}

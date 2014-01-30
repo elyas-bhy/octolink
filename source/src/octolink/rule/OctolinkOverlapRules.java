@@ -58,6 +58,7 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 		if(c.getHealth() <= 0) {
 			universe.removeGameEntity(c);
 			creeps.remove(c);
+			score.setValue(score.getValue() + 1);
 		} else if(l.getHealth() <= 0){
 			l.setHealth(3);
 			l.setPosition(linkStartPos);
