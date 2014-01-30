@@ -1,4 +1,4 @@
-package octolink;
+package octolink.util;
 
 import java.awt.Point;
 

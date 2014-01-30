@@ -1,4 +1,4 @@
-package octolink.gameframework.base;
+package octolink.util;
 
 public class Sprite {
 	
