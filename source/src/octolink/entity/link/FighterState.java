@@ -65,18 +65,18 @@ public class FighterState extends AbstractState {
 		int height = (int) (sprite.getHeight() * sprite.getScale());
 		
 		if (Utils.getOrientation(p) == "right") {
-			width *= 2;
+			width *= 1.5;
 		}
 		else if (Utils.getOrientation(p) == "left") {
-			x = 0;
-			width *= 2;
+			x = width/2;
+			width *= 1.5;
 		}
 		else if (Utils.getOrientation(p) == "down") {
-			height *= 2;
+			height *= 1.5;
 		}
 		else if (Utils.getOrientation(p) == "up") {
-			y = 0;
-			height *= 2;
+			y = height/2;
+			height *= 1.5;
 		}
 		return new Rectangle(x, y, width, height);
 	}

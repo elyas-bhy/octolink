@@ -8,6 +8,7 @@ import gameframework.game.GameLevelDefaultImpl;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -155,6 +156,8 @@ public class OctolinkGame implements Game, Observer {
 		lifeZeldaValue = new Label(Integer.toString(lifeZelda[0].getValue()));
 		scoreValue = new Label(Integer.toString(score[0].getValue()));
 		currentLevelValue = new Label(Integer.toString(levelNumber));
+		c.setBackground(new Color(50, 50, 50));
+		c.setForeground(Color.WHITE);
 		c.add(lifeText);
 		c.add(lifeValue);
 		c.add(lifeZeldaText);
@@ -242,7 +245,7 @@ public class OctolinkGame implements Game, Observer {
 	public void update(Observable o, Object arg) {
 		if (o == endOfGame) {
 			if (endOfGame.getValue()) {
-				informationValue.setText("You win");
+				informationValue.setText("Victory");
 				currentPlayedLevel.interrupt();
 				currentPlayedLevel.end();
 			}
