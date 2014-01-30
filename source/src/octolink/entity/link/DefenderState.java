@@ -38,7 +38,7 @@ public class DefenderState extends AbstractState {
 		}
 		Point invertDirection = new Point((int)-c.getSpeedVector().getDirection().getX(),
 										(int)-c.getSpeedVector().getDirection().getY());
-		c.setSpeedVector(new SpeedVectorDefaultImpl(invertDirection));
+		c.setSpeedVector(new SpeedVectorDefaultImpl(invertDirection, creepSpeedVector.getSpeed()));
 		l.parryFront(c.damage());
 	}
 	

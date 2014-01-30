@@ -1,10 +1,7 @@
 package octolink.entity.link;
 
-import gameframework.base.MoveStrategyStraightLine;
 import gameframework.base.SpeedVector;
 import gameframework.base.SpeedVectorDefaultImpl;
-import gameframework.game.GameMovableDriver;
-import gameframework.game.GameMovableDriverDefaultImpl;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -26,17 +23,20 @@ public class FighterState extends AbstractState {
 	}
 
 	@Override
-	public void collideFront(Link abstractLink, Creep c) {
+	public void collideFront(Link l, Creep c) {
 		SpeedVector creepSpeedVector = c.getSpeedVector();
+		
 		c.setSpeedVector(new SpeedVectorDefaultImpl(
 				new Point((int)-creepSpeedVector.getDirection().getX(),
 						(int)-creepSpeedVector.getDirection().getY()),
-						creepSpeedVector.getSpeed()*10));
-		for(int i = 0; i < 3; ++i)
+						creepSpeedVector.getSpeed()*20));
+		
+		for(int i = 0; i < 3; ++i) {
 			c.oneStepMove();
+		}
 		Point invertDirection = new Point((int)-c.getSpeedVector().getDirection().getX(),
 										(int)-c.getSpeedVector().getDirection().getY());
-		c.setSpeedVector(new SpeedVectorDefaultImpl(invertDirection));
+		c.setSpeedVector(new SpeedVectorDefaultImpl(invertDirection, creepSpeedVector.getSpeed()));
 		c.parry(strike());
 	}
 
