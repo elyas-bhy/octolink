@@ -63,6 +63,9 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 			l.setPosition(linkStartPos);
 		}
 		this.life.setValue(l.getHealth());
+		if (creeps.size() <= 0 && lifeZelda.getValue() > 0) {
+			endOfGame.setValue(true);
+		}
 	}
 
 	public void overlapRule(Zelda z, WarriorCreep c) {
