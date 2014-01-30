@@ -72,7 +72,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 } };
 	
 	
-	public static final int SPRITE_SIZE = 16;
+	public static final int SPRITE_SIZE = 24;
 	public static final int NUMBER_OF_CREEPS = 20;
 	protected ObservableValue<Integer> lifeZelda[];
 

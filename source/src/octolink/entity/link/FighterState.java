@@ -11,12 +11,18 @@ import java.awt.Rectangle;
 
 import octolink.Utils;
 import octolink.entity.Creep;
+import octolink.gameframework.base.Sprite;
 
 public class FighterState extends AbstractState {
 
 	@Override
 	public String getValue() {
 		return "sword-";
+	}
+	
+	@Override
+	public int strike() {
+		return 3;
 	}
 	
 	public void collide(Link l, Creep c) {
@@ -37,11 +43,6 @@ public class FighterState extends AbstractState {
 	}
 
 	@Override
-	public int strike() {
-		return 3;
-	}
-
-	@Override
 	public void collideFront(Link abstractLink, Creep c) {
 		SpeedVector creepSpeedVector = c.getSpeedVector();
 		GameMovableDriver oldCreepDriver = c.getDriver();
@@ -57,11 +58,11 @@ public class FighterState extends AbstractState {
 		c.parry(strike());
 	}
 
-	public Rectangle getBoundingBox(int spriteWidth, int spriteHeight, float renderingScale, Point p) {
-		int x = (int) (spriteWidth * renderingScale);
-		int y = (int) (spriteHeight * renderingScale);
-		int width = (int) (spriteWidth * renderingScale);
-		int height = (int) (spriteHeight * renderingScale);
+	public Rectangle getBoundingBox(Sprite sprite, Point p) {
+		int x = (int) (sprite.getWidth() * sprite.getScale());
+		int y = (int) (sprite.getHeight() * sprite.getScale());
+		int width = (int) (sprite.getWidth() * sprite.getScale());
+		int height = (int) (sprite.getHeight() * sprite.getScale());
 		
 		if (Utils.getOrientation(p) == "right") {
 			width *= 2;

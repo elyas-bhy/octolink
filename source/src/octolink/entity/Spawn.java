@@ -16,7 +16,7 @@ import octolink.rule.OctolinkOverlapRules;
 
 public class Spawn extends GameMovable implements GameEntity, Overlappable {
 	
-	public static final int SPRITE_SIZE = 16;
+	public static final int SPRITE_SIZE = 24;
 	protected GameUniverse universe;
 	protected OctolinkOverlapRules overlapRules;
 	protected Point position;

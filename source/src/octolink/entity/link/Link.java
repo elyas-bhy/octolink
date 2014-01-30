@@ -14,25 +14,22 @@ import java.awt.event.KeyListener;
 
 import octolink.Utils;
 import octolink.entity.WarriorCreep;
+import octolink.gameframework.base.Sprite;
 import octolink.gameframework.game.OctolinkSpriteManager;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
 
-	public static final int SPRITE_WIDTH = 24;
-	public static final int SPRITE_HEIGHT = 24;
-	public static final float RENDERING_SCALE = 0.7f;
-	public static final int[] SPRITE_ROWS = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4,
-		8, 9, 8, 8};
-	protected LinkState state;
-	private boolean moving;
 	private int health = 3;
+	private boolean moving;
+	private Sprite sprite;
+	protected LinkState state;
 	protected final OctolinkSpriteManager spriteManager;
-
-
+	
 	public Link(Canvas defaultCanvas) {
+		int[] rows = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8, 9, 8, 8};
+		sprite = new Sprite("images/link_sprites.png", 24, 24, 1.0f, rows);
 		state = new NeutralState();
-		spriteManager = new OctolinkSpriteManager("images/link_sprites.png", defaultCanvas,
-				RENDERING_SCALE, SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_ROWS);
+		spriteManager = new OctolinkSpriteManager(sprite, defaultCanvas);
 		spriteManager.setTypes("down", "up", "right", "left",
 				"sword-down", "sword-up", "sword-right", "sword-left",
 				"animation-sword-down", "animation-sword-up", "animation-sword-right", "animation-sword-left",
@@ -94,7 +91,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	@Override
 	public Rectangle getBoundingBox() {
 		Point p = getSpeedVector().getDirection();
-		return state.getBoundingBox(SPRITE_WIDTH, SPRITE_HEIGHT, RENDERING_SCALE, p);			
+		return state.getBoundingBox(sprite, p);			
 	}
 
 	@Override
@@ -142,15 +139,15 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	}
 	
 	public int strike() {
-		return this.state.strike();
+		return state.strike();
 	}
 	
 	public void parry(int damage) {
-		this.health -= this.state.parry(damage);
+		this.health -= state.parry(damage);
 	}
 
 	public void parryFront(int damage) {
-		this.health -= this.state.parryFront(damage);
+		this.health -= state.parryFront(damage);
 	}
 
 }

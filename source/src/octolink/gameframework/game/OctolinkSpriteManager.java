@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import octolink.entity.link.Link;
+import octolink.gameframework.base.Sprite;
 
 /**
  * This implementation of {@link SpriteManager} assumes that sprite types are in
@@ -18,22 +19,15 @@ import octolink.entity.link.Link;
  */
 public class OctolinkSpriteManager implements SpriteManager {
 
+	private Sprite sprite;
 	private final DrawableImage image;
 	private Map<String, Integer> types;
 	private int spriteNumber = 0;
-	private final int[] spriteRows;
 	private int currentRow;
-	private final float renderingScale;
-	private final int spriteWidth;
-	private final int spriteHeight;
 
-	public OctolinkSpriteManager(String filename, Canvas canvas, float renderingScale,
-			int spriteWidth, int spriteHeight, int[] spriteRows) {
-		this.renderingScale = renderingScale;
-		this.spriteWidth = spriteWidth;
-		this.spriteHeight = spriteHeight;
-		this.spriteRows = spriteRows;
-		image = new DrawableImage(filename, canvas);
+	public OctolinkSpriteManager(Sprite sprite, Canvas canvas) {
+		this.sprite = sprite;
+		image = new DrawableImage(sprite.getImage(), canvas);
 	}
 
 	@Override
@@ -51,14 +45,14 @@ public class OctolinkSpriteManager implements SpriteManager {
 		// Destination image coordinates
 		int dx1 = (int) position.getX();
 		int dy1 = (int) position.getY();
-		int dx2 = dx1 + (int) (renderingScale * spriteWidth) * 3;
-		int dy2 = dy1 + (int) (renderingScale * spriteHeight) * 3;
+		int dx2 = dx1 + (int) (sprite.getScale() * sprite.getWidth()) * 3;
+		int dy2 = dy1 + (int) (sprite.getScale() * sprite.getHeight()) * 3;
 
 		// Source image coordinates
-		int sx1 = spriteNumber * spriteWidth * 3;
-		int sy1 = currentRow * spriteHeight * 3;
-		int sx2 = sx1 + spriteWidth * 3;
-		int sy2 = sy1 + spriteHeight * 3;
+		int sx1 = spriteNumber * sprite.getWidth() * 3;
+		int sy1 = currentRow * sprite.getHeight() * 3;
+		int sx2 = sx1 + sprite.getWidth() * 3;
+		int sy2 = sy1 + sprite.getHeight() * 3;
 		g.drawImage(image.getImage(), dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,
 				null);
 	}
@@ -74,7 +68,7 @@ public class OctolinkSpriteManager implements SpriteManager {
 
 	@Override
 	public void increment() {
-		spriteNumber = (spriteNumber + 1) % spriteRows[currentRow];
+		spriteNumber = (spriteNumber + 1) % sprite.getRows()[currentRow];
 	}
 
 	@Override
@@ -101,7 +95,7 @@ public class OctolinkSpriteManager implements SpriteManager {
 		case 2:
 			setType("animation-" + spriteType);
 			draw(g, l.getPosition());
-			for (int i = 1; i < spriteRows[getCurrentRow()]; ++i ) {
+			for (int i = 1; i < sprite.getRows()[getCurrentRow()]; ++i ) {
 				increment();
 				draw(g, l.getPosition());
 			}

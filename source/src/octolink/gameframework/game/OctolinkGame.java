@@ -31,7 +31,7 @@ import javax.swing.JPanel;
 public class OctolinkGame implements Game, Observer {
 	protected static final int NB_ROWS = 31;
 	protected static final int NB_COLUMNS = 28;
-	protected static final int SPRITE_SIZE = 16;
+	protected static final int SPRITE_SIZE = 24;
 	public static final int MAX_NUMBER_OF_PLAYER = 4;
 	public static final int NUMBER_OF_LIVES = 3;
 	public static final int ZELDA_LIVES = 3;

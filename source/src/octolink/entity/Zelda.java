@@ -12,7 +12,7 @@ import java.awt.Rectangle;
 
 public class Zelda implements Drawable, GameEntity, Overlappable {
 
-	public static final int RENDERING_SIZE = 16;
+	public static final int RENDERING_SIZE = 24;
 	protected static DrawableImage image = null;
 	protected Point position;
 
