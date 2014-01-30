@@ -5,7 +5,6 @@ import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverse;
-import gameframework.game.OverlapRulesApplierDefaultImpl;
 
 import java.awt.Point;
 import java.awt.Rectangle;

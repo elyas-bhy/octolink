@@ -12,10 +12,10 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import octolink.Utils;
 import octolink.entity.WarriorCreep;
-import octolink.gameframework.base.Sprite;
 import octolink.gameframework.game.OctolinkSpriteManager;
+import octolink.util.Sprite;
+import octolink.util.Utils;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
 	

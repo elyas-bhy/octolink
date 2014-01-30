@@ -9,9 +9,9 @@ import gameframework.game.GameMovableDriverDefaultImpl;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import octolink.Utils;
 import octolink.entity.Creep;
-import octolink.gameframework.base.Sprite;
+import octolink.util.Sprite;
+import octolink.util.Utils;
 
 public class FighterState extends AbstractState {
 

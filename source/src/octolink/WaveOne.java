@@ -3,7 +3,6 @@ package octolink;
 import gameframework.base.MoveStrategyKeyboard;
 import gameframework.base.ObservableValue;
 import gameframework.game.CanvasDefaultImpl;
-import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
 import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverseDefaultImpl;
@@ -75,6 +74,12 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 	public static final int SPRITE_SIZE = 24;
 	public static final int NUMBER_OF_CREEPS = 20;
 	protected ObservableValue<Integer> lifeZelda[];
+	
+	public WaveOne(OctolinkGame g) {
+		super(g);
+		canvas = g.getCanvas();
+		this.lifeZelda = g.lifeZelda();
+	}
 
 	@Override
 	protected void init() {
@@ -148,12 +153,6 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		canvas.addKeyListener(keyStr);
 		canvas.addKeyListener(link);
 		universe.addGameEntity(link);
-	}
-
-	public WaveOne(OctolinkGame g) {
-		super(g);
-		canvas = g.getCanvas();
-		this.lifeZelda = g.lifeZelda();
 	}
 	
 	public int[][] getMap() {

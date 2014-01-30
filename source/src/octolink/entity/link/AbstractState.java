@@ -9,7 +9,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import octolink.entity.Creep;
-import octolink.gameframework.base.Sprite;
+import octolink.util.Sprite;
 
 public abstract class AbstractState implements LinkState {
 
