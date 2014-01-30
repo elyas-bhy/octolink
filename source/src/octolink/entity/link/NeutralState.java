@@ -10,7 +10,7 @@ public class NeutralState extends AbstractState {
 	
 	@Override
 	public int parry(int damage) {
-		return 0 - damage;
+		return damage;
 	}
 
 	@Override

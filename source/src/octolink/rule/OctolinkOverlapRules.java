@@ -73,6 +73,9 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 		lifeZelda.setValue(lifeZelda.getValue()-1);
 		universe.removeGameEntity(c);
 		creeps.remove(c);
+		if (creeps.size() <= 0 && lifeZelda.getValue() > 0) {
+			endOfGame.setValue(true);
+		}
 	}
 	
 	public void overlapRule(Link l, Wall w) {
