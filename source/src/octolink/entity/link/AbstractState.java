@@ -61,11 +61,12 @@ public abstract class AbstractState implements LinkState {
 	}
 
 	@Override
-	public Rectangle getBoundingBox(Sprite sprite, Point p) {
+	public Rectangle getBoundingBox(Link l) {
+		Sprite s = l.getSprite();
 		return new Rectangle(
-				(int) (sprite.getWidth() * sprite.getScale()),   // boundingBox x1 sprite offset
-				(int) (sprite.getHeight() * sprite.getScale()),  // boundingBox y1 sprite offset
-				(int) (sprite.getWidth() * sprite.getScale()),   // boundingBox width
-				(int) (sprite.getHeight() * sprite.getScale())); // boundingBox height
+				(int) (s.getWidth() * s.getScale()),   // boundingBox x1 sprite offset
+				(int) (s.getHeight() * s.getScale()),  // boundingBox y1 sprite offset
+				(int) (s.getWidth() * s.getScale()),   // boundingBox width
+				(int) (s.getHeight() * s.getScale())); // boundingBox height
 	}
 }

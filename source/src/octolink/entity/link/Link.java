@@ -18,6 +18,7 @@ import octolink.gameframework.game.OctolinkSpriteManager;
 import octolink.util.Sprite;
 import octolink.util.Utils;
 
+
 public class Link extends GameMovable implements Drawable, GameEntity,
 		Overlappable, KeyListener {
 
@@ -26,10 +27,12 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 	private int health = 3;
 	private boolean moving;
 	private boolean stricking;
+	private boolean gKeyPressed;
 
 	private Sprite sprite;
 	private LinkState state;
 	private final OctolinkSpriteManager spriteManager;
+
 
 	public Link(Canvas defaultCanvas) {
 		int[] rows = { 11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8,
@@ -49,9 +52,10 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 	@Override
 	public void draw(Graphics g) {
 		// Display boundingBox
-		g.drawRect(getPosition().x + (int) getBoundingBox().getX(),
-				getPosition().y + (int) getBoundingBox().getY(),
-				getBoundingBox().width, getBoundingBox().height);
+		Rectangle bbox = getBoundingBox();
+		g.drawRect(getPosition().x + (int) bbox.getX(),
+				getPosition().y + (int) bbox.getY(),
+				bbox.width, bbox.height);
 
 		Point p = getSpeedVector().getDirection();
 		String spriteType = state.getValue() + Utils.getOrientation(p);
@@ -71,8 +75,9 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 		}
 
 		Color linkDamaged = new Color(255, 0, 0);
-		if (invulnerableTicks > 0)
+		if (invulnerableTicks > 0) {
 			g.setXORMode(linkDamaged);
+		}
 
 		spriteManager.draw(g, getPosition());
 		g.setPaintMode();
@@ -87,83 +92,9 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 		}
 	}
 
-	public LinkState getState() {
-		return state;
-	}
-
-	public void setState(LinkState state) {
-		this.state = state;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int h) {
-		health = h;
-	}
-
-	public int getInvulnerableTicks() {
-		return invulnerableTicks;
-	}
-
-	public void resetInvulnerableTicks() {
-		invulnerableTicks = DEFAULT_INVULNERABILITY_TICKS;
-	}
-
-	public void setInvulnerableTicks(int ticks) {
-		invulnerableTicks = ticks;
-	}
-
 	@Override
 	public Rectangle getBoundingBox() {
-		Point p = getSpeedVector().getDirection();
-		return state.getBoundingBox(sprite, p);
-	}
-
-	@Override
-	public void keyPressed(KeyEvent event) {
-		int keycode = event.getKeyCode();
-		switch (keycode) {
-		case KeyEvent.VK_C:
-			state = new NeutralState();
-			state.setTransitionType(1);
-			break;
-		case KeyEvent.VK_V:
-			state = new FighterState();
-			state.setTransitionType(1);
-			break;
-		case KeyEvent.VK_B:
-			state = new DefenderState();
-			state.setTransitionType(2);
-			break;
-		case KeyEvent.VK_G:
-			if (!stricking) {
-				state = new FighterState();
-				state.setTransitionType(2);
-				stricking = true;
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent event) {
-		int keycode = event.getKeyCode();
-		switch (keycode) {
-		case KeyEvent.VK_G:
-			stricking = false;
-			break;
-		default:
-			break;
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent event) {
-
+		return state.getBoundingBox(this);
 	}
 
 	public void collide(WarriorCreep c) {
@@ -187,6 +118,94 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 
 	public void parryFront(int damage) {
 		this.health -= state.parryFront(damage);
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent event) {
+		int keycode = event.getKeyCode();
+		switch (keycode) {
+		case KeyEvent.VK_C:
+			state = new NeutralState();
+			state.setTransitionType(1);
+			break;
+		case KeyEvent.VK_V:
+			state = new FighterState();
+			state.setTransitionType(1);
+			break;
+		case KeyEvent.VK_B:
+			state = new DefenderState();
+			state.setTransitionType(2);
+			break;
+		case KeyEvent.VK_G:
+			if (!gKeyPressed) {
+				state = new FighterState();
+				state.setTransitionType(2);
+				stricking = true;
+				gKeyPressed = true;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent event) {
+		int keycode = event.getKeyCode();
+		switch (keycode) {
+		case KeyEvent.VK_G:
+			gKeyPressed = false;
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent event) {}
+	
+	public Sprite getSprite() {
+		return sprite;
+	}
+	
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
+
+	public LinkState getState() {
+		return state;
+	}
+
+	public void setState(LinkState state) {
+		this.state = state;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int h) {
+		health = h;
+	}
+
+	public int getInvulnerableTicks() {
+		return invulnerableTicks;
+	}
+
+	public void setInvulnerableTicks(int ticks) {
+		invulnerableTicks = ticks;
+	}
+	
+	public void resetInvulnerableTicks() {
+		invulnerableTicks = DEFAULT_INVULNERABILITY_TICKS;
+	}
+
+	public boolean isStricking() {
+		return stricking;
+	}
+	
+	public void setStricking(boolean b) {
+		stricking = b;
 	}
 
 }

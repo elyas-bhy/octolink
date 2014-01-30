@@ -39,25 +39,30 @@ public class FighterState extends AbstractState {
 		c.parry(strike());
 	}
 
-	public Rectangle getBoundingBox(Sprite sprite, Point p) {
+	public Rectangle getBoundingBox(Link l) {
+		Sprite sprite = l.getSprite();
 		int x = (int) (sprite.getWidth() * sprite.getScale());
 		int y = (int) (sprite.getHeight() * sprite.getScale());
 		int width = (int) (sprite.getWidth() * sprite.getScale());
 		int height = (int) (sprite.getHeight() * sprite.getScale());
 		
-		if (Utils.getOrientation(p) == "right") {
-			width *= 1.5;
-		}
-		else if (Utils.getOrientation(p) == "left") {
-			x = width/2;
-			width *= 1.5;
-		}
-		else if (Utils.getOrientation(p) == "down") {
-			height *= 1.5;
-		}
-		else if (Utils.getOrientation(p) == "up") {
-			y = height/2;
-			height *= 1.5;
+		// Increase bounding box size when Link is stricking
+		if (l.isStricking()) {
+			Point p = l.getSpeedVector().getDirection();
+			if (Utils.getOrientation(p) == "right") {
+				width *= 1.5;
+			}
+			else if (Utils.getOrientation(p) == "left") {
+				x = width/2;
+				width *= 1.5;
+			}
+			else if (Utils.getOrientation(p) == "down") {
+				height *= 1.5;
+			}
+			else if (Utils.getOrientation(p) == "up") {
+				y = height/2;
+				height *= 1.5;
+			}
 		}
 		return new Rectangle(x, y, width, height);
 	}
