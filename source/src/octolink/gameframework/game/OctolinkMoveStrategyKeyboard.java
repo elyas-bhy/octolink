@@ -20,7 +20,6 @@ public class OctolinkMoveStrategyKeyboard extends MoveStrategyKeyboard {
 		pressedKeys = new LinkedHashMap<>();
 	}
 	
-
 	public SpeedVector getSpeedVector() {
 		return speedVector;
 	}
@@ -28,31 +27,33 @@ public class OctolinkMoveStrategyKeyboard extends MoveStrategyKeyboard {
 	@Override
 	public void keyPressed(KeyEvent event) {
 		int keycode = event.getKeyCode();
-		switch (keycode) {
-		case KeyEvent.VK_RIGHT:
-		case KeyEvent.VK_D:
-			speedVector.setDirection(new Point(1, 0));
-			speedVector.setSpeed(DEFAULT_SPEED);
-			pressedKeys.put(keycode, event);
-			break;
-		case KeyEvent.VK_LEFT:
-		case KeyEvent.VK_A:
-			speedVector.setDirection(new Point(-1, 0));
-			speedVector.setSpeed(DEFAULT_SPEED);
-			pressedKeys.put(keycode, event);
-			break;
-		case KeyEvent.VK_UP:
-		case KeyEvent.VK_W:
-			speedVector.setDirection(new Point(0, -1));
-			speedVector.setSpeed(DEFAULT_SPEED);
-			pressedKeys.put(keycode, event);
-			break;
-		case KeyEvent.VK_DOWN:
-		case KeyEvent.VK_S:
-			speedVector.setDirection(new Point(0, 1));
-			speedVector.setSpeed(DEFAULT_SPEED);
-			pressedKeys.put(keycode, event);
-			break;
+		if (!pressedKeys.containsKey(keycode)) {
+			switch (keycode) {
+			case KeyEvent.VK_RIGHT:
+			case KeyEvent.VK_D:
+				speedVector.setDirection(new Point(1, 0));
+				speedVector.setSpeed(DEFAULT_SPEED);
+				pressedKeys.put(keycode, event);
+				break;
+			case KeyEvent.VK_LEFT:
+			case KeyEvent.VK_A:
+				speedVector.setDirection(new Point(-1, 0));
+				speedVector.setSpeed(DEFAULT_SPEED);
+				pressedKeys.put(keycode, event);
+				break;
+			case KeyEvent.VK_UP:
+			case KeyEvent.VK_W:
+				speedVector.setDirection(new Point(0, -1));
+				speedVector.setSpeed(DEFAULT_SPEED);
+				pressedKeys.put(keycode, event);
+				break;
+			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_S:
+				speedVector.setDirection(new Point(0, 1));
+				speedVector.setSpeed(DEFAULT_SPEED);
+				pressedKeys.put(keycode, event);
+				break;
+			}
 		}
 	}
 	
