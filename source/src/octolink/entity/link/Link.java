@@ -6,6 +6,7 @@ import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -69,7 +70,12 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 			spriteManager.setType(spriteType);
 		}
 
+		Color linkDamaged = new Color(255, 0, 0);
+		if (invulnerableTicks > 0)
+			g.setXORMode(linkDamaged);
+
 		spriteManager.draw(g, getPosition());
+		g.setPaintMode();
 	}
 
 	@Override
