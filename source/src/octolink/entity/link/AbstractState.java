@@ -35,7 +35,7 @@ public abstract class AbstractState implements LinkState {
 
 	@Override
 	public void collide(Link l, Creep c) {
-		if(l.getInvulnerableTicks() == 0) {
+		if (l.getInvulnerableTicks() == 0) {
 			Point p = l.getPosition();
 			SpeedVector creepSpeedVector = c.getSpeedVector();
 			GameMovableDriver oldLinkDriver = l.getDriver();
@@ -51,7 +51,7 @@ public abstract class AbstractState implements LinkState {
 				l.oneStepMove();
 			l.setDriver(oldLinkDriver);
 			l.parry(c.damage());
-			l.setInvulnerableTicks();
+			l.resetInvulnerableTicks();
 		}
 	}
 

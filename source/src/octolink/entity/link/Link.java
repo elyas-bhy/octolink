@@ -17,41 +17,44 @@ import octolink.gameframework.game.OctolinkSpriteManager;
 import octolink.util.Sprite;
 import octolink.util.Utils;
 
-public class Link extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
-	
-	private static final int DEFAULT_INULNERABILITY_TICKS = 30;
-	
+public class Link extends GameMovable implements Drawable, GameEntity,
+		Overlappable, KeyListener {
+
+	private static final int DEFAULT_INVULNERABILITY_TICKS = 30;
+	private int invulnerableTicks;
 	private int health = 3;
 	private boolean moving;
+	private boolean stricking;
+
 	private Sprite sprite;
-	protected LinkState state;
-	protected int invulnerableTicks;
-	protected final OctolinkSpriteManager spriteManager;
-	
+	private LinkState state;
+	private final OctolinkSpriteManager spriteManager;
+
 	public Link(Canvas defaultCanvas) {
-		int[] rows = {11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8, 9, 8, 8};
+		int[] rows = { 11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8,
+				9, 8, 8 };
 		sprite = new Sprite("images/link_sprites.png", 24, 24, 1.0f, rows);
 		state = new NeutralState();
 		spriteManager = new OctolinkSpriteManager(sprite, defaultCanvas);
-		spriteManager.setTypes("down", "up", "right", "left",
-				"sword-down", "sword-up", "sword-right", "sword-left",
-				"animation-sword-down", "animation-sword-up", "animation-sword-right", "animation-sword-left",
-				"animation-shield-down", "animation-shield-up", "animation-shield-right", "animation-shield-left",
-				"shield-down", "shield-up", "shield-right", "shield-left"
-				);
-		invulnerableTicks = 0;
+		spriteManager.setTypes("down", "up", "right", "left", "sword-down",
+				"sword-up", "sword-right", "sword-left",
+				"animation-sword-down", "animation-sword-up",
+				"animation-sword-right", "animation-sword-left",
+				"animation-shield-down", "animation-shield-up",
+				"animation-shield-right", "animation-shield-left",
+				"shield-down", "shield-up", "shield-right", "shield-left");
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		// Display boundingBox
-		g.drawRect(getPosition().x + (int)getBoundingBox().getX(),
-				getPosition().y + (int)getBoundingBox().getY(),
+		g.drawRect(getPosition().x + (int) getBoundingBox().getX(),
+				getPosition().y + (int) getBoundingBox().getY(),
 				getBoundingBox().width, getBoundingBox().height);
 
 		Point p = getSpeedVector().getDirection();
 		String spriteType = state.getValue() + Utils.getOrientation(p);
-		
+
 		if (state.getTransitionType() != 0) {
 			spriteManager.handleAnimation(this, g, spriteType);
 			state.setTransitionType(0);
@@ -71,13 +74,13 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 
 	@Override
 	public void oneStepMoveAddedBehavior() {
-		if(invulnerableTicks > 0)
+		if (invulnerableTicks > 0)
 			--invulnerableTicks;
 		if (moving) {
 			spriteManager.increment();
 		}
 	}
-	
+
 	public LinkState getState() {
 		return state;
 	}
@@ -85,31 +88,31 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public void setState(LinkState state) {
 		this.state = state;
 	}
-	
+
 	public int getHealth() {
 		return health;
 	}
-	
+
 	public void setHealth(int h) {
 		health = h;
 	}
-	
+
 	public int getInvulnerableTicks() {
 		return invulnerableTicks;
 	}
 
-	public void setInvulnerableTicks() {
-		invulnerableTicks = DEFAULT_INULNERABILITY_TICKS;
+	public void resetInvulnerableTicks() {
+		invulnerableTicks = DEFAULT_INVULNERABILITY_TICKS;
 	}
 
 	public void setInvulnerableTicks(int ticks) {
 		invulnerableTicks = ticks;
 	}
-	
+
 	@Override
 	public Rectangle getBoundingBox() {
 		Point p = getSpeedVector().getDirection();
-		return state.getBoundingBox(sprite, p);			
+		return state.getBoundingBox(sprite, p);
 	}
 
 	@Override
@@ -129,15 +132,27 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			state.setTransitionType(2);
 			break;
 		case KeyEvent.VK_G:
-			state = new FighterState();
-			state.setTransitionType(2);
+			if (!stricking) {
+				state = new FighterState();
+				state.setTransitionType(2);
+				stricking = true;
+			}
+			break;
+		default:
 			break;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent event) {
-
+		int keycode = event.getKeyCode();
+		switch (keycode) {
+		case KeyEvent.VK_G:
+			stricking = false;
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -148,18 +163,18 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public void collide(WarriorCreep c) {
 		Point linkDir = this.getSpeedVector().getDirection();
 		Point creepDir = c.getSpeedVector().getDirection();
-		if ((linkDir.getX() == -creepDir.getX() && linkDir.getX() != 0) || 
-				linkDir.getY() == -creepDir.getY() && linkDir.getY() != 0) {
+		if ((linkDir.getX() == -creepDir.getX() && linkDir.getX() != 0)
+				|| linkDir.getY() == -creepDir.getY() && linkDir.getY() != 0) {
 			state.collideFront(this, c);
 		} else {
-			this.state.collide(this, c);
+			state.collide(this, c);
 		}
 	}
-	
+
 	public int strike() {
 		return state.strike();
 	}
-	
+
 	public void parry(int damage) {
 		this.health -= state.parry(damage);
 	}

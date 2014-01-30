@@ -1,10 +1,8 @@
 package octolink.entity.link;
 
-import gameframework.base.MoveStrategyStraightLine;
 import gameframework.base.SpeedVector;
 import gameframework.base.SpeedVectorDefaultImpl;
 import gameframework.game.GameMovableDriver;
-import gameframework.game.GameMovableDriverDefaultImpl;
 
 import java.awt.Point;
 import java.awt.Rectangle;
