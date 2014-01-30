@@ -50,7 +50,6 @@ public abstract class AbstractState implements LinkState {
 			l.oneStepMove();
 		l.setDriver(oldLinkDriver);
 		l.parry(c.damage());
-		System.out.println("Health: " + l.getHealth());
 	}
 
 	@Override
