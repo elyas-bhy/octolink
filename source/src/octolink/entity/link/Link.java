@@ -18,11 +18,14 @@ import octolink.gameframework.base.Sprite;
 import octolink.gameframework.game.OctolinkSpriteManager;
 
 public class Link extends GameMovable implements Drawable, GameEntity, Overlappable, KeyListener {
-
+	
+	private static final int DEFAULT_INULNERABILITY_TICKS = 30;
+	
 	private int health = 3;
 	private boolean moving;
 	private Sprite sprite;
 	protected LinkState state;
+	protected int invulnerableTicks;
 	protected final OctolinkSpriteManager spriteManager;
 	
 	public Link(Canvas defaultCanvas) {
@@ -36,6 +39,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 				"animation-shield-down", "animation-shield-up", "animation-shield-right", "animation-shield-left",
 				"shield-down", "shield-up", "shield-right", "shield-left"
 				);
+		invulnerableTicks = 0;
 	}
 
 	@Override
@@ -67,6 +71,8 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 
 	@Override
 	public void oneStepMoveAddedBehavior() {
+		if(invulnerableTicks > 0)
+			--invulnerableTicks;
 		if (moving) {
 			spriteManager.increment();
 		}
@@ -87,7 +93,19 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	public void setHealth(int h) {
 		health = h;
 	}
+	
+	public int getInvulnerableTicks() {
+		return invulnerableTicks;
+	}
 
+	public void setInvulnerableTicks() {
+		invulnerableTicks = DEFAULT_INULNERABILITY_TICKS;
+	}
+
+	public void setInvulnerableTicks(int ticks) {
+		invulnerableTicks = ticks;
+	}
+	
 	@Override
 	public Rectangle getBoundingBox() {
 		Point p = getSpeedVector().getDirection();

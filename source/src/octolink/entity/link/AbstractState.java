@@ -24,39 +24,42 @@ public abstract class AbstractState implements LinkState {
 	public void setTransitionType(int type) {
 		transitionType = type;
 	}
-	
+
 	public int parry(int damage) {
 		return damage;
 	}
-	
+
 	public int parryFront(int damage) {
 		return parry(damage);
 	}
-	
+
 	@Override
 	public void collide(Link l, Creep c) {
-		Point p = l.getPosition();
-		SpeedVector creepSpeedVector = c.getSpeedVector();
-		GameMovableDriver oldLinkDriver = l.getDriver();
-		
-		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
-		Point destination = new Point(
+		if(l.getInvulnerableTicks() == 0) {
+			Point p = l.getPosition();
+			SpeedVector creepSpeedVector = c.getSpeedVector();
+			GameMovableDriver oldLinkDriver = l.getDriver();
+
+			GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
+			Point destination = new Point(
 					(int) (p.getX() + creepSpeedVector.getDirection().getX() * 100),
 					(int) (p.getY() + creepSpeedVector.getDirection().getY() * 100));
 
-		linkDriver.setStrategy(new MoveStrategyStraightLine(p, destination));
-		l.setDriver(linkDriver);
-		for (int i = 0; i < 3; ++i)
-			l.oneStepMove();
-		l.setDriver(oldLinkDriver);
-		l.parry(c.damage());
+			linkDriver.setStrategy(new MoveStrategyStraightLine(p, destination));
+			l.setDriver(linkDriver);
+			for (int i = 0; i < 3; ++i)
+				l.oneStepMove();
+			l.setDriver(oldLinkDriver);
+			l.parry(c.damage());
+			l.setInvulnerableTicks();
+		}
 	}
 
 	@Override
 	public void collideFront(Link l, Creep c) {
 		collide(l, c);		
 	}
-	
+
 	@Override
 	public Rectangle getBoundingBox(Sprite sprite, Point p) {
 		return new Rectangle(
