@@ -17,7 +17,7 @@ public class Zelda implements Drawable, GameEntity, Overlappable {
 	protected Point position;
 
 	public Zelda(Canvas defaultCanvas, Point pos) {
-		image = new DrawableImage("images/zelda.gif", defaultCanvas);
+		image = new DrawableImage("images/zelda.png", defaultCanvas);
 		position = pos;
 	}
 
