@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import octolink.entity.Creep;
+import octolink.gameframework.base.Sprite;
 
 public abstract class AbstractState implements LinkState {
 
@@ -22,6 +23,14 @@ public abstract class AbstractState implements LinkState {
 	@Override
 	public void setTransitionType(int type) {
 		transitionType = type;
+	}
+	
+	public int parry(int damage) {
+		return damage;
+	}
+	
+	public int parryFront(int damage) {
+		return parry(damage);
 	}
 	
 	@Override
@@ -47,21 +56,13 @@ public abstract class AbstractState implements LinkState {
 	public void collideFront(Link l, Creep c) {
 		collide(l, c);		
 	}
-
-	public int parry(int damage) {
-		return damage;
-	}
-	
-	public int parryFront(int damage) {
-		return parry(damage);
-	}
 	
 	@Override
-	public Rectangle getBoundingBox(int spriteWidth, int spriteHeight, float renderingScale, Point p) {
+	public Rectangle getBoundingBox(Sprite sprite, Point p) {
 		return new Rectangle(
-				(int) (spriteWidth * renderingScale),   // boundingBox x1 sprite offset
-				(int) (spriteHeight * renderingScale),  // boundingBox y1 sprite offset
-				(int) (spriteWidth * renderingScale),   // boundingBox width
-				(int) (spriteHeight * renderingScale)); // boundingBox height
+				(int) (sprite.getWidth() * sprite.getScale()),   // boundingBox x1 sprite offset
+				(int) (sprite.getHeight() * sprite.getScale()),  // boundingBox y1 sprite offset
+				(int) (sprite.getWidth() * sprite.getScale()),   // boundingBox width
+				(int) (sprite.getHeight() * sprite.getScale())); // boundingBox height
 	}
 }

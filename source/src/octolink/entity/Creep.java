@@ -15,7 +15,7 @@ import gameframework.game.SpriteManagerDefaultImpl;
 
 public abstract class Creep extends GameMovable implements Drawable, GameEntity, Overlappable, MoveBlocker {
 
-	public static final int RENDERING_SIZE = 16;
+	public static final int RENDERING_SIZE = 24;
 	
 	private final SpriteManagerDefaultImpl spriteManager;
 	protected static DrawableImage image = null;

@@ -11,7 +11,7 @@ import java.awt.Rectangle;
 
 public class Path implements Terrain, Drawable, GameEntity {
 
-	public static final int RENDERING_SIZE = 16;
+	public static final int RENDERING_SIZE = 24;
 	private DrawableImage image;
 	protected Point position;
 

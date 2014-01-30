@@ -12,7 +12,7 @@ public class CreepMoveStrategy implements MoveStrategy {
 	
 	// Represents a path tile on the map
 	private final int PATH = 0;
-	private final int SPRITE_SIZE = 16;
+	private final int SPRITE_SIZE = 24;
 
 	private SpeedVector currentMove = new SpeedVectorDefaultImpl(new Point(0, 0));
 	private Creep creep;
