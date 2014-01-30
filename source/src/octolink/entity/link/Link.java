@@ -2,7 +2,6 @@ package octolink.entity.link;
 
 import gameframework.base.Drawable;
 import gameframework.base.Overlappable;
-import gameframework.base.SpeedVector;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 
@@ -44,32 +43,16 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 
 	@Override
 	public void draw(Graphics g) {
-		// display boundingBox
+		// Display boundingBox
 		g.drawRect(getPosition().x + (int)getBoundingBox().getX(),
 				getPosition().y + (int)getBoundingBox().getY(),
 				getBoundingBox().width, getBoundingBox().height);
 
-		String spriteType = "";
-		Point tmp = getSpeedVector().getDirection();
-
-		spriteType = state.getValue() + Utils.getOrientation(tmp);
-
-		if (state.getTransitionType() == 1) {
-			spriteManager.setType(spriteType);
-			spriteManager.reset();
-			spriteManager.draw(g, getPosition());
-			state.setTransitionType(0);
-			return;
-		}
-		else if (state.getTransitionType() == 2) {
-			spriteManager.setType("animation-" + spriteType);
-			spriteManager.draw(g, getPosition());
-			for (int i = 1; i < SPRITE_ROWS[spriteManager.getCurrentRow()]; ++i ) {
-				spriteManager.increment();
-				spriteManager.draw(g, getPosition());
-			}
-			spriteManager.setType(spriteType);
-			spriteManager.reset();
+		Point p = getSpeedVector().getDirection();
+		String spriteType = state.getValue() + Utils.getOrientation(p);
+		
+		if (state.getTransitionType() != 0) {
+			spriteManager.handleAnimation(this, g, spriteType);
 			state.setTransitionType(0);
 			return;
 		}
@@ -77,12 +60,11 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 		if (getSpeedVector().getSpeed() == 0) {
 			moving = false;
 			spriteManager.reset();
-			spriteManager.draw(g, getPosition());
-			return;
+		} else {
+			moving = true;
+			spriteManager.setType(spriteType);
 		}
 
-		moving = true;
-		spriteManager.setType(spriteType);
 		spriteManager.draw(g, getPosition());
 	}
 
@@ -92,6 +74,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 			spriteManager.increment();
 		}
 	}
+	
 	public LinkState getState() {
 		return state;
 	}
@@ -111,7 +94,7 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	@Override
 	public Rectangle getBoundingBox() {
 		Point p = getSpeedVector().getDirection();
-		return this.state.getBoundingBox(SPRITE_WIDTH, SPRITE_HEIGHT, RENDERING_SCALE, p);			
+		return state.getBoundingBox(SPRITE_WIDTH, SPRITE_HEIGHT, RENDERING_SCALE, p);			
 	}
 
 	@Override
@@ -148,15 +131,11 @@ public class Link extends GameMovable implements Drawable, GameEntity, Overlappa
 	}
 
 	public void collide(WarriorCreep c) {
-		Point linkSVDir, creepSVDir;
-		SpeedVector linkSV, creepSV;
-		linkSV = this.getSpeedVector();
-		creepSV = c.getSpeedVector();
-		linkSVDir = linkSV.getDirection();
-		creepSVDir = creepSV.getDirection();
-		if((linkSVDir.getX() == -creepSVDir.getX() && linkSVDir.getX() != 0) ||
-				linkSVDir.getY() == -creepSVDir.getY() && linkSVDir.getY() != 0) {
-			this.state.collideFront(this, c);
+		Point linkDir = this.getSpeedVector().getDirection();
+		Point creepDir = c.getSpeedVector().getDirection();
+		if ((linkDir.getX() == -creepDir.getX() && linkDir.getX() != 0) || 
+				linkDir.getY() == -creepDir.getY() && linkDir.getY() != 0) {
+			state.collideFront(this, c);
 		} else {
 			this.state.collide(this, c);
 		}

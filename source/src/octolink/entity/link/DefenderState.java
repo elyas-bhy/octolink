@@ -10,7 +10,7 @@ import java.awt.Point;
 import octolink.entity.Creep;
 
 public class DefenderState extends AbstractState {
-	
+
 	@Override
 	public String getValue() {
 		return "shield-";
@@ -37,11 +37,11 @@ public class DefenderState extends AbstractState {
 	@Override
 	public int parryFront(int damage) {
 		return 0;
-		
 	}
 
 	@Override
 	public int strike() {
 		return 0;
 	}
+	
 }

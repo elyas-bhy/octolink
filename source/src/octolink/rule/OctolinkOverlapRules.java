@@ -12,6 +12,7 @@ import octolink.entity.Creep;
 import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
+import octolink.entity.Zelda;
 import octolink.entity.link.Link;
 
 public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
@@ -24,14 +25,16 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	protected boolean manageLinkDeath;
 	private final ObservableValue<Integer> score;
 	private final ObservableValue<Integer> life;
+	private final ObservableValue<Integer> lifeZelda;
 	private final ObservableValue<Boolean> endOfGame;
 
 	public OctolinkOverlapRules(Point linkPos, Point creepPos,
-			ObservableValue<Integer> life, ObservableValue<Integer> score,
-			ObservableValue<Boolean> endOfGame) {
+			ObservableValue<Integer> life, ObservableValue<Integer> lifeZelda,
+			ObservableValue<Integer> score,	ObservableValue<Boolean> endOfGame) {
 		linkStartPos = (Point) linkPos.clone();
 		creepStartPos = (Point) creepPos.clone();
 		this.life = life;
+		this.lifeZelda = lifeZelda;
 		this.score = score;
 		this.endOfGame = endOfGame;
 	}
@@ -59,6 +62,10 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 			l.setHealth(3);
 			l.setPosition(linkStartPos);
 		}
+	}
+
+	public void overlapRule(Zelda z, WarriorCreep c) {
+		lifeZelda.setValue(lifeZelda.getValue()-1);
 	}
 	
 	public void overlapRule(Link l, Wall w) {

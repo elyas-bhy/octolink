@@ -1,9 +1,11 @@
 package octolink;
 
 import gameframework.base.MoveStrategyKeyboard;
+import gameframework.base.ObservableValue;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
+import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverseDefaultImpl;
 import gameframework.game.GameUniverseViewPortDefaultImpl;
 import gameframework.game.MoveBlockerChecker;
@@ -24,8 +26,8 @@ import octolink.entity.Zelda;
 import octolink.entity.link.DefenderState;
 import octolink.entity.link.Link;
 import octolink.gameframework.game.CreepMoveStrategy;
+import octolink.gameframework.game.OctolinkGame;
 import octolink.gameframework.game.OctolinkGameLevel;
-import octolink.gameframework.game.OctolinkGameMovableDriver;
 import octolink.gameframework.game.OctolinkMoveBlockerChecker;
 import octolink.gameframework.game.OctolinkMoveStrategyKeyboard;
 import octolink.gameframework.game.OctolinkOverlapProcessor;
@@ -72,6 +74,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 	
 	public static final int SPRITE_SIZE = 16;
 	public static final int NUMBER_OF_CREEPS = 20;
+	protected ObservableValue<Integer> lifeZelda[];
 
 	@Override
 	protected void init() {
@@ -80,8 +83,8 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		MoveBlockerChecker moveBlockerChecker = new OctolinkMoveBlockerChecker();
 		moveBlockerChecker.setMoveBlockerRules(new OctolinkMoveBlockers());
 		
-		OctolinkOverlapRules overlapRules = new OctolinkOverlapRules(new Point(8 * SPRITE_SIZE, 8 * SPRITE_SIZE),
-				new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE), life[0], score[0], endOfGame);
+		OctolinkOverlapRules overlapRules = new OctolinkOverlapRules(new Point(8 * SPRITE_SIZE, 10 * SPRITE_SIZE),
+				new Point(1 * SPRITE_SIZE, 1 * SPRITE_SIZE), life[0], lifeZelda[0], score[0], endOfGame);
 		overlapProcessor.setOverlapRules(overlapRules);
 
 		universe = new GameUniverseDefaultImpl(moveBlockerChecker, overlapProcessor);
@@ -95,7 +98,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		ArrayList<Integer> frequencyList = new ArrayList<Integer>();
 		Creep creep;
 		for (int t = 0; t < NUMBER_OF_CREEPS; ++t) {
-			OctolinkGameMovableDriver creepDriver = new OctolinkGameMovableDriver();
+			GameMovableDriverDefaultImpl creepDriver = new GameMovableDriverDefaultImpl();
 			creepDriver.setmoveBlockerChecker(moveBlockerChecker);
 			creep = new WarriorCreep(canvas);
 			CreepMoveStrategy strategy = new CreepMoveStrategy(creep, map);
@@ -136,7 +139,7 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		
 		// Link definition and inclusion in the universe
 		Link link = new Link(canvas);
-		OctolinkGameMovableDriver linkDriver = new OctolinkGameMovableDriver();
+		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
 		MoveStrategyKeyboard keyStr = new OctolinkMoveStrategyKeyboard();
 		linkDriver.setStrategy(keyStr);
 		linkDriver.setmoveBlockerChecker(moveBlockerChecker);
@@ -148,9 +151,10 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		universe.addGameEntity(link);
 	}
 
-	public WaveOne(Game g) {
+	public WaveOne(OctolinkGame g) {
 		super(g);
 		canvas = g.getCanvas();
+		this.lifeZelda = g.lifeZelda();
 	}
 	
 	public int[][] getMap() {

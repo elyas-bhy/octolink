@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
+import octolink.entity.link.Link;
+
 /**
  * This implementation of {@link SpriteManager} assumes that sprite types are in
  * rows whereas increments of a type are in columns
@@ -88,4 +90,25 @@ public class OctolinkSpriteManager implements SpriteManager {
 	public int getCurrentRow() {
 		return currentRow;
 	}
+	
+	public void handleAnimation(Link l, Graphics g, String spriteType) {
+		switch(l.getState().getTransitionType()) {
+		case 1:
+			setType(spriteType);
+			reset();
+			draw(g, l.getPosition());
+			break;
+		case 2:
+			setType("animation-" + spriteType);
+			draw(g, l.getPosition());
+			for (int i = 1; i < spriteRows[getCurrentRow()]; ++i ) {
+				increment();
+				draw(g, l.getPosition());
+			}
+			setType(spriteType);
+			reset();
+			break;
+		}
+	}
+	
 }

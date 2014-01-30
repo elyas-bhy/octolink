@@ -8,7 +8,6 @@ import gameframework.game.GameLevelDefaultImpl;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -34,11 +33,13 @@ public class OctolinkGame implements Game, Observer {
 	protected static final int NB_COLUMNS = 28;
 	protected static final int SPRITE_SIZE = 16;
 	public static final int MAX_NUMBER_OF_PLAYER = 4;
-	public static final int NUMBER_OF_LIVES = 1;
+	public static final int NUMBER_OF_LIVES = 5;
+	public static final int ZELDA_LIVES = 3;
 
 	protected CanvasDefaultImpl defaultCanvas = null;
 	protected ObservableValue<Integer> score[] = new ObservableValue[MAX_NUMBER_OF_PLAYER];
 	protected ObservableValue<Integer> life[] = new ObservableValue[MAX_NUMBER_OF_PLAYER];
+	protected ObservableValue<Integer> lifeZelda[] = new ObservableValue[MAX_NUMBER_OF_PLAYER];
 
 	// initialized before each level
 	protected ObservableValue<Boolean> endOfGame = null;
@@ -49,10 +50,10 @@ public class OctolinkGame implements Game, Observer {
 	protected int levelNumber;
 	protected ArrayList<GameLevel> gameLevels;
 
-	protected Label lifeText, scoreText;
+	protected Label lifeText, lifeZeldaText, scoreText;
 	protected Label information;
 	protected Label informationValue;
-	protected Label lifeValue, scoreValue;
+	protected Label lifeValue, lifeZeldaValue, scoreValue;
 	protected Label currentLevel;
 	protected Label currentLevelValue;
 
@@ -60,8 +61,10 @@ public class OctolinkGame implements Game, Observer {
 		for (int i = 0; i < MAX_NUMBER_OF_PLAYER; ++i) {
 			score[i] = new ObservableValue<Integer>(0);
 			life[i] = new ObservableValue<Integer>(0);
+			lifeZelda[i] = new ObservableValue<Integer>(0);
 		}
 		lifeText = new Label("Lives:");
+		lifeZeldaText = new Label("Zelda Lives:");
 		scoreText = new Label("Score:");
 		information = new Label("State:");
 		informationValue = new Label("Playing");
@@ -148,13 +151,14 @@ public class OctolinkGame implements Game, Observer {
 		JPanel c = new JPanel();
 		GridBagLayout layout = new GridBagLayout();
 		c.setLayout(layout);
-		c.setBackground(Color.BLACK);
-		c.setForeground(Color.GRAY);
 		lifeValue = new Label(Integer.toString(life[0].getValue()));
+		lifeZeldaValue = new Label(Integer.toString(lifeZelda[0].getValue()));
 		scoreValue = new Label(Integer.toString(score[0].getValue()));
 		currentLevelValue = new Label(Integer.toString(levelNumber));
 		c.add(lifeText);
 		c.add(lifeValue);
+		c.add(lifeZeldaText);
+		c.add(lifeZeldaValue);
 		c.add(scoreText);
 		c.add(scoreValue);
 		c.add(currentLevel);
@@ -173,6 +177,8 @@ public class OctolinkGame implements Game, Observer {
 			score[i].addObserver(this);
 			life[i].addObserver(this);
 			life[i].setValue(NUMBER_OF_LIVES);
+			lifeZelda[i].addObserver(this);
+			lifeZelda[i].setValue(ZELDA_LIVES);
 			score[i].setValue(0);
 		}
 		levelNumber = 0;
@@ -220,6 +226,10 @@ public class OctolinkGame implements Game, Observer {
 	public ObservableValue<Integer>[] life() {
 		return life;
 	}
+	
+	public ObservableValue<Integer>[] lifeZelda() {
+		return lifeZelda;
+	}
 
 	public ObservableValue<Boolean> endOfGame() {
 		return endOfGame;
@@ -248,12 +258,21 @@ public class OctolinkGame implements Game, Observer {
 					}
 				}
 			}
+			for (ObservableValue<Integer> lifeZeldaObservable : lifeZelda) {
+				if (o == lifeZeldaObservable) {
+					int zeldaLives = ((ObservableValue<Integer>) o).getValue();
+					lifeZeldaValue.setText(Integer.toString(zeldaLives));
+					if (zeldaLives == 0) {
+						informationValue.setText("Defeat");
+						currentPlayedLevel.interrupt();
+						currentPlayedLevel.end();
+					}
+				}
+			}
 			for (ObservableValue<Integer> scoreObservable : score) {
 				if (o == scoreObservable) {
-					scoreValue
-							.setText(Integer
-									.toString(((ObservableValue<Integer>) o)
-											.getValue()));
+					int score = ((ObservableValue<Integer>) o).getValue();
+					scoreValue.setText(Integer.toString(score));
 				}
 			}
 		}
