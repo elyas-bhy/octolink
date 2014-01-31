@@ -28,10 +28,10 @@ public abstract class Creep extends GameMovable implements Drawable, GameEntity,
 	protected static int DEFAULT_PARRY = 1;
 
 	public Creep(Canvas defaultCanvas, String gif) {
-		spriteManager = new SpriteManagerDefaultImpl(gif, defaultCanvas, RENDERING_SIZE, 6);
-		spriteManager.setTypes("left", "right", "up", "down", "unused");
-		setHealth(DEFAULT_HEALTH);
+		spriteManager = new SpriteManagerDefaultImpl(gif, defaultCanvas, RENDERING_SIZE, 4);
+		spriteManager.setTypes("down", "up", "right", "left");
 		setSpeedVector(new SpeedVectorDefaultImpl(new Point(), DEFAULT_SPEED));
+		setHealth(DEFAULT_HEALTH);
 	}
 	
 	@Override

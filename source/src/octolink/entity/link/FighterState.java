@@ -11,6 +11,8 @@ import octolink.util.Sprite;
 import octolink.util.Utils;
 
 public class FighterState extends AbstractState {
+	
+	protected static int DEFAULT_DAMAGE = 3;
 
 	@Override
 	public String getValue() {
@@ -19,7 +21,7 @@ public class FighterState extends AbstractState {
 	
 	@Override
 	public int strike() {
-		return 3;
+		return DEFAULT_DAMAGE;
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class FighterState extends AbstractState {
 		int width = (int) (sprite.getWidth() * sprite.getScale());
 		int height = (int) (sprite.getHeight() * sprite.getScale());
 		
-		// Increase bounding box size when Link is stricking
+		// Increase bounding box size when Link is striking
 		if (l.isStricking()) {
 			Point p = l.getSpeedVector().getDirection();
 			if (Utils.getOrientation(p) == "right") {

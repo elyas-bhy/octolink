@@ -96,10 +96,13 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 		Point linkPos = this.getPosition();
 		Point creepPos = c.getPosition();
 		Point linkDir = this.getSpeedVector().getDirection();
-		if ((creepPos.getX() > linkPos.getX() && linkDir.getX() > 0) ||
+		Point creepDir = c.getSpeedVector().getDirection();
+		/*if ((creepPos.getX() > linkPos.getX() && linkDir.getX() > 0) ||
 				(creepPos.getY() > linkPos.getY() && linkDir.getY() > 0) ||
 				(creepPos.getX() < linkPos.getX() && linkDir.getX() < 0) ||
-				(creepPos.getY() < linkPos.getY() && linkDir.getY() < 0)){
+				(creepPos.getY() < linkPos.getY() && linkDir.getY() < 0)){*/
+		if((creepDir.getX() == -linkDir.getX()) && linkDir.getX() != 0 ||
+				(creepDir.getY() == -linkDir.getY()) && linkDir.getX() != 0) {
 			state.collideFront(this, c);
 		} else {
 			state.collide(this, c);

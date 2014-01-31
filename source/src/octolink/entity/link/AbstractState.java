@@ -14,6 +14,8 @@ import octolink.util.Sprite;
 public abstract class AbstractState implements LinkState {
 
 	protected AnimationType animationType;
+	protected static int DEFAULT_DAMAGE = 0;
+	protected static int DEFAULT_PARRY = 0;
 
 	@Override
 	public AnimationType getAnimationType() {
@@ -24,9 +26,13 @@ public abstract class AbstractState implements LinkState {
 	public void setAnimationType(AnimationType type) {
 		animationType = type;
 	}
+	
+	public int strike() {
+		return DEFAULT_DAMAGE;
+	}
 
 	public int parry(int damage) {
-		return damage;
+		return damage - DEFAULT_PARRY;
 	}
 
 	public int parryFront(int damage) {

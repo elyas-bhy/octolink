@@ -15,11 +15,6 @@ public class DefenderState extends AbstractState {
 	}
 
 	@Override
-	public int strike() {
-		return 0;
-	}
-
-	@Override
 	public int parryFront(int damage) {
 		return 0;
 	}

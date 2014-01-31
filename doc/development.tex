@@ -1,5 +1,18 @@
 \chapter{Développement}
 
+\section{Fonctionnalités du jeu}
+
+Ce jeu est un mélange entre les jeux de types Tower Defence, et les jeux Zelda. Le joueur a le contrôle de Link et a accès à tous les endroits du terrain de jeu, mis à part quelques obstacles comme les murs, ou comme l'eau.
+Les Creeps, en revanche sont restreints aux terrains de type "Path", comme dans certains Tower Defense, et ne peuvent en aucun cas quitter le chemin, et il est impossible de les y contraindre.\\
+Il existe une condition de défaite, lorsque Zelda (destination finale des Creeps) n'a plus de points de vie, la partie est perdue.
+La condition de victoire est d'éliminer tous les Creeps que les Spawns prévoient d'envoyer à l'assaut de la princesse.
+Link n'est lui même pas invulnérable, il possède un certain nombre de points de vie lui aussi. S'il percute un mur (si il se fait éjecter dans un mur au contact d'un Creep), il ne perdra pas de points de vie, mais il sera renvoyé a son point d'apparition initiale.
+Si ses points de vie atteignent zéro, il sera également renvoyé a son point d'origine, et son compteur de vie sera initialisé à trois.\\
+Link possède deux équipements: son épée, et son bouclier.\\
+Lorsque Link équipe son épée, il peut frapper les Creeps, ainsi les repoussant, et leur infligeant des dégâts.\\
+Lorsque Link équipe son bouclier, il peut repousser les Creeps, de la même manière qu'avec l'épée, mais ce sans infliger de dégâts.\\
+
+
 \section{Modifications du framework}
 
 Afin de pouvoir définir des tailles de sprite différentes et rectangulaires, nous avons créé notre propre classe OctolinkSpriteManager. Cela nous a également permi de créer des bounding box avec des tailles personnalisées et de bien les aligner par rapport aux sprites. Nous avons été obligé de dupliquer la classe IntersectTools du framework pour gérer les collisions correctement avec nos bounding box personnalisées.
@@ -11,20 +24,19 @@ Afin de pouvoir définir des tailles de sprite différentes et rectangulaires, n
   \label{fig:Link sprite bounding box}
 \end{figure}
 
+De plus, pour rajouter une barre de vie pour Zelda et implémenter les fonctions pause et resume, nous avons été contraint de dupliquer les classes GameDefaultImpl et GameLevelDefaultImpl.
+
 
 \section{Architecture du jeu}
 
-\section{Fonctionnalites du jeu}
-
-Ce jeu est un melange entre les jeux de types Tower Defence, et les jeux Zeldas. Le joueur a le controle de Link et a acces a tous les endroits du terrain de jeu, mis a part quelques obstacles comme les murs, ou comme l'eau.
-Les Creeps, en revanche sont restraints au terrains de type "Path", comme dans certains Tower Defense, et ne peuvent en aucun cas quitter le chemin, et il est impossible de les y contraindre.\\
-Il existe une condition de defaite, lorsque Zelda (destination finale des Creeps) n'a plus de points de vie, la partie est perdue.
-La condition de victoire est d'eliminer tous les creeps que les Spawns prevoient d'envoyer a l'assaut de la princesse.
-Link n'est lui meme pas invulnerable, il possede un certain nombre de points de vie lui aussi. S'il percute un mur (si il se fait ejecter dans un mur au contact d'un creep), il ne perdra pas de points de vie, mais il sera renvoye a son point d'apparition initiale.
-Si ses points de vie atteindent zero, il sera egalement renvoye a son point d'origine, et son compteur de vie sera initialise a trois.\\
-Link possede deux equipements: Son epee, et son bouclier.\\
-Lorsque Link equipe son epee, il peut frapper les Creeps, ainsi les repoussant, et leur infligeant des degats.\\
-Lorsque Link equipe son bouclier, il peut repousser les Creeps, de la meme maniere qu'avec l'epee, mais ce sans inflier de degats.\\
+\begin{figure}[ht!]
+  \center
+  \includegraphics[width=16cm,keepaspectratio]{resources/state_pattern.png}
+  \caption{State pattern}
+  \label{fig:State pattern}
+\end{figure}
 
 
 \section{Problèmes rencontrés}
+La modification des bounding box engendrée par l'utilisation de sprites de tailles différents a été complexe car il a fallu intégrer les modifications au système de gestion des collisions.
+L'implémentation des fonctions pause et resume s'est avérée assez délicate à cause de la gestion des Threads avec les méthodes wait() et notify() en étant synchronised.
