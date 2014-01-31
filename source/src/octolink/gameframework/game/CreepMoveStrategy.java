@@ -21,6 +21,7 @@ public class CreepMoveStrategy implements MoveStrategy {
 	public CreepMoveStrategy(Creep creep, int[][] map) {
 		this.creep = creep;
 		this.map = map;
+		currentMove.setSpeed(6);
 	}
 
 	public synchronized SpeedVector getSpeedVector() {

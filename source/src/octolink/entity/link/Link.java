@@ -35,8 +35,7 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 
 
 	public Link(Canvas defaultCanvas) {
-		int[] rows = { 11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8,
-				9, 8, 8 };
+		int[] rows = { 11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8, 9, 8, 8 };
 		sprite = new Sprite("images/link_sprites.png", 24, 24, 1.0f, rows);
 		state = new NeutralState();
 		spriteManager = new OctolinkSpriteManager(sprite, defaultCanvas);
@@ -51,12 +50,6 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 
 	@Override
 	public void draw(Graphics g) {
-		// Display boundingBox
-		Rectangle bbox = getBoundingBox();
-		g.drawRect(getPosition().x + (int) bbox.getX(),
-				getPosition().y + (int) bbox.getY(),
-				bbox.width, bbox.height);
-
 		Point p = getSpeedVector().getDirection();
 		String spriteType = state.getValue() + Utils.getOrientation(p);
 
@@ -74,9 +67,8 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 			spriteManager.setType(spriteType);
 		}
 
-		Color linkDamaged = new Color(255, 0, 0);
 		if (invulnerableTicks > 0) {
-			g.setXORMode(linkDamaged);
+			g.setXORMode(new Color(140, 60, 80));
 		}
 
 		spriteManager.draw(g, getPosition());
