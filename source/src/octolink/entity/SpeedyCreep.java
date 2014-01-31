@@ -11,7 +11,7 @@ public class SpeedyCreep extends Creep {
 	protected static int DEFAULT_HEALTH = 1;
 
 	public SpeedyCreep(Canvas defaultCanvas) {
-		super(defaultCanvas, "images/ghost.gif");
+		super(defaultCanvas, "images/creep_green.png");
 		setSpeedVector(new SpeedVectorDefaultImpl(new Point(), DEFAULT_SPEED));
 		setHealth(DEFAULT_HEALTH);
 	}
