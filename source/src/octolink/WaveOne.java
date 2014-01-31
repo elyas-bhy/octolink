@@ -3,7 +3,6 @@ package octolink;
 import gameframework.base.MoveStrategyKeyboard;
 import gameframework.base.ObservableValue;
 import gameframework.game.CanvasDefaultImpl;
-import gameframework.game.GameLevelDefaultImpl;
 import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverseDefaultImpl;
 import gameframework.game.GameUniverseViewPortDefaultImpl;
@@ -33,7 +32,7 @@ import octolink.gameframework.game.OctolinkOverlapProcessor;
 import octolink.rule.OctolinkMoveBlockers;
 import octolink.rule.OctolinkOverlapRules;
 
-public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
+public class WaveOne extends OctolinkGameLevel {
 	Canvas canvas;
 
 	// 0 : Path; 1 : Spawn; 2 : Walls; 3 : Grass; 4 : Water; 5 : Holes; 6 : Zelda
@@ -153,10 +152,6 @@ public class WaveOne extends GameLevelDefaultImpl implements OctolinkGameLevel {
 		canvas.addKeyListener(keyStr);
 		canvas.addKeyListener(link);
 		universe.addGameEntity(link);
-	}
-	
-	public int[][] getMap() {
-		return map;
 	}
 
 }

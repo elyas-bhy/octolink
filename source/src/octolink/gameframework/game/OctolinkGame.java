@@ -4,7 +4,6 @@ import gameframework.base.ObservableValue;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevel;
-import gameframework.game.GameLevelDefaultImpl;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -44,19 +43,16 @@ public class OctolinkGame implements Game, Observer {
 
 	// initialized before each level
 	protected ObservableValue<Boolean> endOfGame = null;
+	protected ObservableValue<String> state = null;
 
 	private Frame f;
-	private GameLevelDefaultImpl currentPlayedLevel = null;
+	private OctolinkGameLevel currentPlayedLevel = null;
 
 	protected int levelNumber;
 	protected ArrayList<GameLevel> gameLevels;
 
-	protected Label lifeText, lifeZeldaText, scoreText;
-	protected Label information;
-	protected Label informationValue;
-	protected Label lifeValue, lifeZeldaValue, scoreValue;
-	protected Label currentLevel;
-	protected Label currentLevelValue;
+	protected Label lifeText, lifeZeldaText, scoreText, currentLevel, information;
+	protected Label lifeValue, lifeZeldaValue, scoreValue, currentLevelValue, informationValue;
 
 	public OctolinkGame() {
 		for (int i = 0; i < MAX_NUMBER_OF_PLAYER; ++i) {
@@ -64,11 +60,11 @@ public class OctolinkGame implements Game, Observer {
 			life[i] = new ObservableValue<Integer>(0);
 			lifeZelda[i] = new ObservableValue<Integer>(0);
 		}
+		state = new ObservableValue<String>("Playing");
 		lifeText = new Label("Link Lives:");
 		lifeZeldaText = new Label("Zelda Lives:");
 		scoreText = new Label("Score:");
 		information = new Label("State:");
-		informationValue = new Label("Playing");
 		currentLevel = new Label("Level:");
 		createGUI();
 	}
@@ -156,6 +152,7 @@ public class OctolinkGame implements Game, Observer {
 		lifeZeldaValue = new Label(Integer.toString(lifeZelda[0].getValue()));
 		scoreValue = new Label(Integer.toString(score[0].getValue()));
 		currentLevelValue = new Label(Integer.toString(levelNumber));
+		informationValue = new Label(state.getValue());
 		c.setBackground(new Color(50, 50, 50));
 		c.setForeground(Color.WHITE);
 		c.add(lifeText);
@@ -188,14 +185,19 @@ public class OctolinkGame implements Game, Observer {
 		for (GameLevel level : gameLevels) {
 			endOfGame = new ObservableValue<Boolean>(false);
 			endOfGame.addObserver(this);
+			state = new ObservableValue<String>("Playing");
+			state.addObserver(this);
 			try {
 				if (currentPlayedLevel != null && currentPlayedLevel.isAlive()) {
-					currentPlayedLevel.interrupt();
+					synchronized (currentPlayedLevel) {
+						currentPlayedLevel.notifyAll();
+					}
 					currentPlayedLevel = null;
 				}
-				currentPlayedLevel = (GameLevelDefaultImpl) level;
+				currentPlayedLevel = (OctolinkGameLevel) level;
 				levelNumber++;
 				currentLevelValue.setText(Integer.toString(levelNumber));
+
 				currentPlayedLevel.start();
 				currentPlayedLevel.join();
 			} catch (Exception e) {
@@ -213,13 +215,21 @@ public class OctolinkGame implements Game, Observer {
 	}
 
 	public void pause() {
-		System.out.println("pause(): Unimplemented operation");
-		// currentPlayedLevel.suspend();
+		state.setValue("Paused");
+		synchronized (currentPlayedLevel) {
+			if (currentPlayedLevel.getState() != Thread.State.WAITING) {
+				currentPlayedLevel.interrupt();
+			}
+		}
 	}
 
 	public void resume() {
-		System.out.println("resume(): Unimplemented operation");
-		// currentPlayedLevel.resume();
+		if (!endOfGame.getValue()) {
+			state.setValue("Playing");
+			synchronized (currentPlayedLevel) {
+				currentPlayedLevel.notifyAll();
+			}
+		}
 	}
 
 	public ObservableValue<Integer>[] score() {
@@ -229,9 +239,13 @@ public class OctolinkGame implements Game, Observer {
 	public ObservableValue<Integer>[] life() {
 		return life;
 	}
-	
+
 	public ObservableValue<Integer>[] lifeZelda() {
 		return lifeZelda;
+	}
+
+	public ObservableValue<String> state() {
+		return state;
 	}
 
 	public ObservableValue<Boolean> endOfGame() {
@@ -249,6 +263,9 @@ public class OctolinkGame implements Game, Observer {
 				currentPlayedLevel.interrupt();
 				currentPlayedLevel.end();
 			}
+		} else if (o == state) {
+			String state = ((ObservableValue<String>) o).getValue();
+			informationValue.setText(state);
 		} else {
 			for (ObservableValue<Integer> lifeObservable : life) {
 				if (o == lifeObservable) {
