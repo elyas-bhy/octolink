@@ -6,6 +6,7 @@ public class WarriorCreep extends Creep {
 
 	public WarriorCreep(Canvas defaultCanvas) {
 		super(defaultCanvas, "images/ghost.gif");
+		setHealth(DEFAULT_HEALTH);
 	}
 
 }

@@ -17,6 +17,7 @@ import octolink.entity.Creep;
 import octolink.entity.Grass;
 import octolink.entity.Path;
 import octolink.entity.Spawn;
+import octolink.entity.SpeedyCreep;
 import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
@@ -103,9 +104,13 @@ public class WaveOne extends OctolinkGameLevel {
 		ArrayList<Integer> frequencyList = new ArrayList<Integer>();
 		Creep creep;
 		for (int t = 0; t < NUMBER_OF_CREEPS; ++t) {
+			if(t % 2 == 0) {
+				creep = new WarriorCreep(canvas);				
+			} else {
+				creep = new SpeedyCreep(canvas);
+			}
 			GameMovableDriverDefaultImpl creepDriver = new GameMovableDriverDefaultImpl();
 			creepDriver.setmoveBlockerChecker(moveBlockerChecker);
-			creep = new WarriorCreep(canvas);
 			CreepMoveStrategy strategy = new CreepMoveStrategy(creep, map);
 			creepDriver.setStrategy(strategy);
 			creep.setDriver(creepDriver);

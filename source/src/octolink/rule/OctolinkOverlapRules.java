@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.util.Vector;
 
 import octolink.entity.Creep;
+import octolink.entity.SpeedyCreep;
 import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
@@ -54,6 +55,22 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 	}
 
 	public void overlapRule(Link l, WarriorCreep c) {
+		overlapRuleDefault(l, c);
+	}
+	
+	public void overlapRule(Link l, SpeedyCreep c) {
+		overlapRuleDefault(l, c);
+	}
+
+	public void overlapRule(Zelda z, WarriorCreep c) {
+		overlapRuleDefault(z, c);
+	}
+	
+	public void overlapRule(Zelda z, SpeedyCreep c) {
+		overlapRuleDefault(z, c);
+	}
+	
+	public void overlapRuleDefault(Link l, Creep c) {
 		l.collide(c);
 		if(c.getHealth() <= 0) {
 			universe.removeGameEntity(c);
@@ -68,8 +85,8 @@ public class OctolinkOverlapRules extends OverlapRulesApplierDefaultImpl {
 			endOfGame.setValue(true);
 		}
 	}
-
-	public void overlapRule(Zelda z, WarriorCreep c) {
+	
+	public void overlapRuleDefault(Zelda z, Creep c) {
 		lifeZelda.setValue(lifeZelda.getValue()-1);
 		universe.removeGameEntity(c);
 		creeps.remove(c);

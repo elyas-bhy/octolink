@@ -13,6 +13,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import octolink.entity.Creep;
 import octolink.entity.WarriorCreep;
 import octolink.gameframework.game.OctolinkSpriteManager;
 import octolink.util.Sprite;
@@ -24,7 +25,8 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 
 	private static final int DEFAULT_INVULNERABILITY_TICKS = 30;
 	private int invulnerableTicks;
-	private int health = 3;
+	// 3 hearts with 4 quarters each
+	private int health = 12;
 	private boolean moving;
 	private boolean stricking;
 	private boolean gKeyPressed;
@@ -89,8 +91,8 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 	public Rectangle getBoundingBox() {
 		return state.getBoundingBox(this);
 	}
-
-	public void collide(WarriorCreep c) {
+	
+	public void collide(Creep c) {
 		Point linkPos = this.getPosition();
 		Point creepPos = c.getPosition();
 		Point linkDir = this.getSpeedVector().getDirection();
