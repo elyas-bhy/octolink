@@ -93,14 +93,14 @@ public class OctolinkGame implements Game, Observer {
 
 	private void createMenuBar() {
 		MenuBar menuBar = new MenuBar();
-		Menu file = new Menu("file");
-		MenuItem start = new MenuItem("new game");
-		MenuItem save = new MenuItem("save");
-		MenuItem restore = new MenuItem("load");
-		MenuItem quit = new MenuItem("quit");
-		Menu game = new Menu("game");
-		MenuItem pause = new MenuItem("pause");
-		MenuItem resume = new MenuItem("resume");
+		Menu file = new Menu("File");
+		MenuItem start = new MenuItem("New game");
+		MenuItem save = new MenuItem("Save");
+		MenuItem restore = new MenuItem("Load");
+		MenuItem quit = new MenuItem("Quit");
+		Menu game = new Menu("Game");
+		MenuItem pause = new MenuItem("Pause");
+		MenuItem resume = new MenuItem("Resume");
 		menuBar.add(file);
 		menuBar.add(game);
 		f.setMenuBar(menuBar);
