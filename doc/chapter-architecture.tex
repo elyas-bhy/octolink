@@ -5,9 +5,9 @@
 Afin de pouvoir définir des tailles de sprite différentes et rectangulaires,
 nous avons créé notre propre classe OctolinkSpriteManager. Cela nous a également
 permi de créer des bounding box avec des tailles personnalisées et de bien les
-aligner par rapport aux sprites. Nous avons été obligé de dupliquer la classe
-IntersectTools du framework existant pour gérer les collisions correctement avec
-nos bounding box personnalisées.
+aligner par rapport aux sprites. Nous avons été obligé de dupliquer et
+modifier la classe IntersectTools du framework existant pour gérer les
+collisions correctement avec nos bounding box personnalisées.
 
 \begin{figure}[ht!]
   \center
@@ -31,11 +31,17 @@ classes GameDefaultImpl et GameLevelDefaultImpl.
   \label{fig:State pattern}
 \end{figure}
 
+En utilisant le pattern State, nous avons pu gérer les différents états de Link,
+notamment en déléguant toutes les opérations spécifiques à l'état.\\
+Ceci nous a facilité la gestion des bounding box différentes et des collisions
+en fonction de l'état.
+
 
 \section{Problèmes rencontrés}
-La modification des bounding box engendrée par l'utilisation de sprites de
+- La modification des bounding box engendrée par l'utilisation de sprites de
 tailles différents a été complexe car il a fallu intégrer les modifications au
-système de gestion des collisions.
-L'implémentation des fonctions \emph{pause} et \emph{resume} s'est avérée assez
-délicate à cause de la gestion des Threads avec les méthodes \emph{wait()} et
+système de gestion des collisions.\\
+
+- L'implémentation des fonctions \emph{pause} et \emph{resume} s'est avérée
+assez délicate à cause de la gestion des Threads avec les méthodes \emph{wait()} et
 \emph{notify()} en étant \emph{synchronized}.
