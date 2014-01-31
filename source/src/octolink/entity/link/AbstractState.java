@@ -13,16 +13,16 @@ import octolink.util.Sprite;
 
 public abstract class AbstractState implements LinkState {
 
-	protected int transitionType;
+	protected AnimationType animationType;
 
 	@Override
-	public int getTransitionType() {
-		return transitionType;
+	public AnimationType getAnimationType() {
+		return animationType;
 	}
 
 	@Override
-	public void setTransitionType(int type) {
-		transitionType = type;
+	public void setAnimationType(AnimationType type) {
+		animationType = type;
 	}
 
 	public int parry(int damage) {

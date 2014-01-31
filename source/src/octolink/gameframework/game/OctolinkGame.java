@@ -70,7 +70,7 @@ public class OctolinkGame implements Game, Observer {
 	}
 
 	public void createGUI() {
-		f = new Frame("Default Game");
+		f = new Frame("Octolink");
 		f.dispose();
 
 		createMenuBar();
