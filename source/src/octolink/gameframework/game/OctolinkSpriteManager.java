@@ -9,7 +9,9 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
+import octolink.entity.link.AnimationType;
 import octolink.entity.link.Link;
+import octolink.entity.link.LinkState;
 import octolink.util.Sprite;
 
 /**
@@ -61,8 +63,7 @@ public class OctolinkSpriteManager implements SpriteManager {
 	@Override
 	public void setType(String type) {
 		if (!types.containsKey(type)) {
-			//throw new IllegalArgumentException(type
-				//	+ " is not a valid type for this sprite manager.");
+			// Keep previous sprite
 			return;
 		}
 		this.currentRow = types.get(type);
@@ -88,13 +89,16 @@ public class OctolinkSpriteManager implements SpriteManager {
 	}
 
 	public void handleAnimation(Link l, Graphics g, String spriteType) {
-		switch(l.getState().getTransitionType()) {
-		case 1:
+		LinkState state = l.getState();
+		switch(state.getAnimationType()) {
+		
+		case SINGLE:
 			setType(spriteType);
 			reset();
 			draw(g, l.getPosition());
 			break;
-		case 2:
+			
+		case MULTIPLE:
 			l.setStricking(false);
 			setType("animation-" + spriteType);
 			draw(g, l.getPosition());
@@ -105,7 +109,11 @@ public class OctolinkSpriteManager implements SpriteManager {
 			setType(spriteType);
 			reset();
 			break;
+			
+		default:
+			break;
 		}
+		state.setAnimationType(AnimationType.NONE);
 	}
 
 }

@@ -21,6 +21,7 @@ import octolink.entity.Wall;
 import octolink.entity.WarriorCreep;
 import octolink.entity.Water;
 import octolink.entity.Zelda;
+import octolink.entity.link.AnimationType;
 import octolink.entity.link.Link;
 import octolink.entity.link.NeutralState;
 import octolink.gameframework.game.CreepMoveStrategy;
@@ -149,6 +150,7 @@ public class WaveOne extends OctolinkGameLevel {
 		link.setDriver(linkDriver);
 		link.setPosition(new Point(8 * SPRITE_SIZE, 10 * SPRITE_SIZE));
 		link.setState(new NeutralState());
+		link.getState().setAnimationType(AnimationType.NONE);
 		canvas.addKeyListener(keyStr);
 		canvas.addKeyListener(link);
 		universe.addGameEntity(link);

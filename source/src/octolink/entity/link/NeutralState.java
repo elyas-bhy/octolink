@@ -17,4 +17,5 @@ public class NeutralState extends AbstractState {
 	public int strike() {
 		return 0;
 	}
+	
 }

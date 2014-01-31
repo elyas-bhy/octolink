@@ -7,8 +7,8 @@ import octolink.entity.Creep;
 public interface LinkState {
 	
 	public String getValue();
-	public int getTransitionType();
-	public void setTransitionType(int type);
+	public AnimationType getAnimationType();
+	public void setAnimationType(AnimationType type);
 	public int strike();
 	public int parry(int damage);
 	public int parryFront(int damage);

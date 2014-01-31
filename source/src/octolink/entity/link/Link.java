@@ -38,6 +38,7 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 		int[] rows = { 11, 11, 11, 11, 5, 5, 5, 5, 8, 8, 8, 8, 3, 5, 4, 4, 8, 9, 8, 8 };
 		sprite = new Sprite("images/link_sprites.png", 24, 24, 1.0f, rows);
 		state = new NeutralState();
+		state.setAnimationType(AnimationType.NONE);
 		spriteManager = new OctolinkSpriteManager(sprite, defaultCanvas);
 		spriteManager.setTypes("down", "up", "right", "left", "sword-down",
 				"sword-up", "sword-right", "sword-left",
@@ -53,9 +54,8 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 		Point p = getSpeedVector().getDirection();
 		String spriteType = state.getValue() + Utils.getOrientation(p);
 
-		if (state.getTransitionType() != 0) {
+		if (state.getAnimationType() != AnimationType.NONE) {
 			spriteManager.handleAnimation(this, g, spriteType);
-			state.setTransitionType(0);
 			return;
 		}
 
@@ -77,8 +77,9 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 
 	@Override
 	public void oneStepMoveAddedBehavior() {
-		if (invulnerableTicks > 0)
+		if (invulnerableTicks > 0) {
 			--invulnerableTicks;
+		}
 		if (moving) {
 			spriteManager.increment();
 		}
@@ -93,7 +94,6 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 		Point linkPos = this.getPosition();
 		Point creepPos = c.getPosition();
 		Point linkDir = this.getSpeedVector().getDirection();
-		Point creepDir = c.getSpeedVector().getDirection();
 		if ((creepPos.getX() > linkPos.getX() && linkDir.getX() > 0) ||
 				(creepPos.getY() > linkPos.getY() && linkDir.getY() > 0) ||
 				(creepPos.getX() < linkPos.getX() && linkDir.getX() < 0) ||
@@ -122,20 +122,20 @@ public class Link extends GameMovable implements Drawable, GameEntity,
 		switch (keycode) {
 		case KeyEvent.VK_C:
 			state = new NeutralState();
-			state.setTransitionType(1);
+			state.setAnimationType(AnimationType.SINGLE);
 			break;
 		case KeyEvent.VK_V:
 			state = new FighterState();
-			state.setTransitionType(1);
+			state.setAnimationType(AnimationType.SINGLE);
 			break;
 		case KeyEvent.VK_B:
 			state = new DefenderState();
-			state.setTransitionType(2);
+			state.setAnimationType(AnimationType.MULTIPLE);
 			break;
 		case KeyEvent.VK_G:
 			if (!gKeyPressed) {
 				state = new FighterState();
-				state.setTransitionType(2);
+				state.setAnimationType(AnimationType.MULTIPLE);
 				stricking = true;
 				gKeyPressed = true;
 			}
